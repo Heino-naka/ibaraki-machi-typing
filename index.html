@@ -53,6 +53,10 @@ button{font-family:inherit;cursor:pointer;border:0}
 .btn.small{min-height:42px;padding:6px 14px;font-size:15px}
 .btn:disabled{opacity:.45;cursor:default}
 .menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#qrBox{position:fixed;top:12px;left:12px;z-index:5;background:#fff;border-radius:12px;padding:6px 6px 4px;text-align:center;box-shadow:0 3px 0 rgba(0,0,0,.18);width:clamp(84px,9vw,124px)}
+#qrBox img{display:block;width:100%;height:auto;image-rendering:pixelated}
+#qrBox span{display:block;font-size:11px;font-weight:700;color:var(--ink);line-height:1.5}
+.btn.danger{background:#ef6a5a;color:#fff;box-shadow:0 4px 0 #b84a3d}
 .foot{text-align:center;color:#ffe6cc;font-size:clamp(12px,1.1vw,15px);margin-top:clamp(12px,2.4vh,24px);line-height:1.8}
 .foot a{color:#fff}
 /* ---- タイトル（よこ ながは ひだり：なまえ／みぎ：メニュー） ---- */
@@ -256,6 +260,7 @@ kbd{font-family:var(--mono);background:#fff;border:1px solid #cdbfab;border-bott
 
 <!-- タイトル -->
 <section class="screen on" id="title">
+  <div id="qrBox"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVcAAAFXAQMAAAAs/59bAAAABlBMVEX////lHhLdE4+iAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAC0ElEQVRoge2azbGjQAyERfngo0MgFEIbQiMUh8DRBxfaUbcGGJbdAN7rvmDgwweVNPqZMZMkSfo5ennog8vXbFyKf5/ruJg9PmYT3r7F9mz8qI/r2+H7dF+K2XOtz+qXr/c0N0TsmZ18e1T7LiXYt8G+MOwnWFzE3rE2+gz7uuOT+jDMLPY/LN2vvcWXEcBi71ljHPu8PTwCeL+LtW+2u5j/7Wzmi2rKNHN3uc0tv509m9kQx4jqpcC+txJbNXg8bvmiLnoRwAPSBs0stmdryEYJ4s63ZmSdUV02ViliO7YWce7rGPVv+ORsDwTvBket7EliIeRYLoGAlpJ3G6J69u9hX7EHmyUIS7r8xDb4q5uJvbKM4yfzKAJ4QKeadUm6ptiOrTkh8kUN56zlWnJF81UbVjtJbIhNKYcfzqkHU21719V9YsHGjwfyBR9wbhQZF38QUS32ysKiK3zyw+xB+55TrdieNXP6HSteZA86I8ZHX7E3bEGDRferq11oxOXlrI3FXtnIF84pbrhmLoFRBudEROyVrRblpgHTafVJXljEdW292EOtDY0LO3guelHn2UViQ/swd+DIzdqEF+3WcIpjsYdybpRpI8wcGTc7iNZPiO3q3xx+sEXFRsvonBu1alhsz7ozXxRuI9MnrTQPPUnsrsKN4yjp1tYlTG50zfMeldjdvnMeSRgOdv8yY1xsx+ZugWMG4swQEIu4rav7xNK+S2GGKByy5W6y59yo603F7vY1ZojWJVj2Wdiq6vKF2GTbeRhzLoGcFJU86dH7r9iTsK+XW6LOE0Xe4thMbMfmOYU2Bx/3DT0eJYoZiNgrW23IZS6WQPQMbPLTvv2+nliyPKsWjXzcT3mclFHNtl7sP9g22uU50iluopG47h2IPdixrXZlL4PzEPPfPinW8kTfsQR+WrECo3e1sljr8gUf49QQJrw381+xkiRJP0V/AFUOIqBHeAQOAAAAAElFTkSuQmCC" alt="このゲームの QRコード" width="343" height="343"><span>QRで ひらく</span></div>
   <div class="hero">
     <div class="heroText">
       <h1><small>ひぬまの町</small>茨城町タイピング探検</h1>
@@ -374,6 +379,7 @@ kbd{font-family:var(--mono);background:#fff;border:1px solid #cdbfab;border-bott
     <div id="zkGrid"></div>
     <div class="row" style="justify-content:center;margin-top:14px">
       <button class="btn sub2" data-go="title">🏠 もどる</button>
+      <button class="btn sub2 small" id="zkReset">🗑️ ずかんを リセット</button>
     </div>
   </div>
 </section>
@@ -966,6 +972,15 @@ function openModal(h){SE.page();$('modalBody').innerHTML=h;$('modal').classList.
 function closeModal(){$('modal').classList.remove('on')}
 $('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 
+// ===== スマホ では パソコンを すすめる =====
+(function(){
+  const ua=navigator.userAgent||'';
+  const phone=!/CrOS/.test(ua)&&(/iPhone|iPod|Windows Phone/.test(ua)||/Android.*Mobile/.test(ua)||(matchMedia('(pointer:coarse)').matches&&Math.min(screen.width,screen.height)<500));
+  if(!phone) return;
+  $('qrBox').style.display='none';
+  $('modalBody').innerHTML='<div style="text-align:center;line-height:1.9"><div style="font-size:44px">💻</div><h3 style="margin:4px 0 8px">パソコンで ひらいてね</h3><p style="margin:0 0 14px">このゲームは <b>キーボード</b>で ローマ字を うつよ。<br>パソコンや Chromebook で あそんでね。</p><button class="btn sub2" onclick="closeModal()">それでも あそぶ</button></div>';
+  $('modal').classList.add('on');
+})();
 // ===== ゲーム =====
 let G=null, state='idle';
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -1205,6 +1220,8 @@ function renderZukan(){
         :`<div class="mini no"><div class="mi">？</div><div class="mn">${'★'.repeat(w.rar)}</div></div>`).join('')+'</div>';
   }).join('');
 }
+$('zkReset').onclick=()=>{ac();SE.ui();openModal('<h3 style="margin:0 0 8px">ずかんを リセットする？</h3><p style="line-height:1.9;margin:0 0 12px">あつめた カードが <b>ぜんぶ きえて</b>、さいしょから あつめなおしに なるよ。<br>しじみと ハイスコアは そのまま のこるよ。<br><b>もとには もどせないよ。</b></p><div class="row" style="justify-content:center;gap:12px"><button class="btn sub2" onclick="closeModal()">やめる</button><button class="btn danger" id="zkResetOk">リセットする</button></div>');
+  $('zkResetOk').onclick=()=>{S.cards={};save();closeModal();renderZukan();renderTitle();SE.back()}};
 $('zkGrid').addEventListener('click',e=>{const b=e.target.closest('[data-id]'); if(!b)return; const w=WORDS[b.dataset.id];
   openModal(cardHTML(w,'')+'<div class="row" style="justify-content:center;margin-top:12px"><button class="btn" onclick="closeModal()">とじる</button></div>')});
 
