@@ -630,7 +630,7 @@ function keyPoint(combo,lv){return Math.round(5*Math.min(3,1+Math.floor(combo/25
 function wordBonus(m,noMiss,lv){return Math.round((m.u.length*3+(noMiss?60:0))*(LV_MUL[lv]||1))} // ノーミスで うてると おおきい
 const MISS_PENALTY=10;
 const ACC_TIERS=[{min:100,name:'パーフェクト',mul:1,lv:4},{min:95,name:'ほぼ かんぺき',mul:.5,lv:3},{min:90,name:'すごい せいかくさ',mul:.25,lv:2},{min:80,name:'せいかくさ じょうず',mul:.1,lv:1}];
-function accOf(ok,ng){return ok+ng?ok/(ok+ng)*100:0}
+function accOf(ok,ng){return ok+ng?ok/(ok+ng)*100:0} // ひょうじは きりすて（ミスが あれば 100%に ならない）
 function accBonus(score,ok,ng){ if(ok<40) return {tier:null,pt:0}; const a=accOf(ok,ng); const t=ACC_TIERS.find(t=>t.min===100?ng===0:a>=t.min); return t?{tier:t,pt:Math.round(score*t.mul)}:{tier:null,pt:0}}
 function titleOf(score){let t=TITLES[0];for(const x of TITLES) if(score>=x[0]) t=x; return t}
 function nextTitle(score){return TITLES.find(x=>x[0]>score)||null}
@@ -940,13 +940,13 @@ function endGame(quit){
   $('rTitle').textContent=titleOf(sc)[1];
   const nx=nextTitle(sc); $('rNext').textContent=nx?'あと '+(nx[0]-sc)+'てんで「'+nx[1]+'」':'さいこうの しょうごうだ！';
   $('rWords').textContent=G.words.length;
-  $('rAcc').textContent=(G.ok+G.ng?Math.round(G.ok/(G.ok+G.ng)*100):0)+'%';
+  $('rAcc').textContent=Math.floor(accOf(G.ok,G.ng))+'%';
   $('rCombo').textContent=G.maxCombo;
   $('rCoin').textContent='+'+coin; $('rFirst').textContent=first?'（はじめての ボーナス つき！）':'';
   const opened=COURSES.filter((c,i)=>!before[i]&&unlocked(c));
   $('rUnlock').innerHTML=opened.map(c=>'<div class="unlock">🔓「'+c.name+'」コースが ひらいた！</div>').join('')+(S.coins>=GACHA_COST?'<div class="unlock" style="background:#fff1dc;color:#9a4a12">🎰 しじみが たまった！ ガチャが まわせるよ</div>':'');
   $('rBridge').innerHTML=bridgeMsg(G.words);
-  const acc=Math.round(accOf(G.ok,G.ng));
+  const acc=Math.floor(accOf(G.ok,G.ng)); // 99.6%を「100%」と かんちがい しないよう きりすて
   $('rAccBox').innerHTML=ab.tier?`<div class="accbox t${ab.tier.lv}"><div class="an">${ab.tier.name}！</div><div class="ap">せいかく ${acc}% ボーナス <b>+${ab.pt}</b></div></div>`:(G.ok<40?'':'<div class="accnote">せいかくさ 80%を こえると ボーナス！</div>');
   show('result');
   const newBest=sc>prev&&sc>0, opened2=opened.length>0;
