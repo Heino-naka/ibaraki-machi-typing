@@ -838,15 +838,21 @@ function runCount(){
   cdTimers.push(setTimeout(()=>{setNum('スタート！',true);SE.go()},2700));
   cdTimers.push(setTimeout(()=>{el.classList.remove('on'); state='play'; G.t0=performance.now(); requestAnimationFrame(tick)},3300));
 }
-const REPEAT_P={1:0.3,2:0.2,3:0.2}; // ときどき まえに でた ことばが もどってくる
+const REPEAT_P={1:0.3,2:0.2,3:0.15}; // むずかしいは すこし ひかえめ
+const LOWER_P=0.1; // うえの コースでも 1わりくらいは したの コースの ことばが でる
+function lowerPool(lv){return lv===2?WORDS.filter(w=>w.lv===1):lv===3?WORDS.filter(w=>w.lv===1||w.lv===2):[]} // ときどき まえに でた ことばが もどってくる
 function nextWord(){
-  if(G.words.length>=3&&Math.random()<REPEAT_P[G.lv]){
-    const c=G.words.slice(-12).filter(w=>w!==G.w); G.w=c[Math.random()*c.length|0];
-  }else{
-    if(G.di>=G.deck.length){G.deck=shuffle(G.deck);G.di=0}
-    G.w=G.deck[G.di++]; if(G.w===G.prev&&G.deck.length>1){G.deck.push(G.w);G.w=G.deck[G.di++]}
+  const pickFrom=pool=>{const c=pool.filter(w=>w!==G.prev);return c.length?c[Math.random()*c.length|0]:null};
+  let w=null;
+  if(G.words.length>=3&&Math.random()<REPEAT_P[G.lv]) w=pickFrom(G.words.slice(-12)); // まえに でた ことば
+  if(!w&&G.lv>=2&&Math.random()<LOWER_P) w=pickFrom(lowerPool(G.lv)); // したの コースの ことば
+  if(!w){
+    for(let t=0;t<6;t++){
+      if(G.di>=G.deck.length){G.deck=shuffle(G.deck);G.di=0}
+      w=G.deck[G.di++]; if(w!==G.prev) break;
+    }
   }
-  G.prev=G.w; G.m=makeMatcher(G.w.r); G.miss=false; renderWord();
+  G.w=w; G.prev=w; G.m=makeMatcher(G.w.r); G.miss=false; renderWord();
 }
 function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
 function fmt(t){return esc(t).replace(/\{([^|{}]+)\|([^{}]+)\}/g,'<ruby>$1<rt>$2</rt></ruby>')} // {漢字|よみ} → ふりがな
