@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>茨城町タイピング探検</title>
-<meta name="description" content="ひぬまの町・茨城町のことばを打って、ふるさとカードを集めるタイピングゲーム。町名・名所・学校・名物など139枚のカードがガチャで手に入る。無料・登録なし・端末内で完結。">
+<meta name="description" content="ひぬまの町・茨城町のことばを打って、ふるさとカードを集めるタイピングゲーム。町名・名所・学校・名物など190枚のカードがガチャで手に入る。無料・登録なし・端末内で完結。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://heino-naka.github.io/ibaraki-machi-typing/">
 <meta property="og:image" content="https://heino-naka.github.io/ibaraki-machi-typing/ogp.png">
@@ -512,7 +512,7 @@ const WORDS = [
  {k:'水戸ホーリーホック',r:'みとほーりーほっく',lv:2,ic:'⚽',rar:2,go:'place',cat:'thing',f:'茨城町もホームタウンにしている、プロサッカーチーム。「ホーリーホック」は英語で「{葵|あおい}」のこと。{水戸藩|みとはん}の{家紋|かもん}にちなんだ名前だよ。'},
  {k:'ひぬまの里物産センター',r:'ひぬまのさとぶっさんせんたー',lv:3,ic:'🏪',rar:2,go:'place',cat:'shop',f:'若宮にある直売所。涸沼のしじみや魚、つけもの、地元の野菜などが買えるよ。くぬぎ林もあるよ。'},
  {k:'里山自然体験',r:'さとやましぜんたいけん',lv:2,ic:'🌲',rar:2,go:'place',cat:'thing',f:'若宮体験学習の森で行われる、町の「親子で里山自然体験教室」。さつまいもほりや、木と竹の工作、たき火を体験するよ。'},
- {k:'いばSUNホール',r:'いばさんほーる',lv:2,ic:'🎭',rar:2,go:'place',cat:'place',f:'茨城町文化交流会館の{愛称|あいしょう}。小堤の役場のとなりにあるよ。最大500席の大きなホールや、カフェ、音楽スタジオ、キッズルームがあるよ。'},
+ {k:'いばSUNホール',r:'いばSUNほーる',lv:2,ic:'🎭',rar:2,go:'place',cat:'place',f:'茨城町文化交流会館の{愛称|あいしょう}。小堤の役場のとなりにあるよ。最大500席の大きなホールや、カフェ、音楽スタジオ、キッズルームがあるよ。'},
  {k:'イオンタウン水戸南',r:'いおんたうんみとみなみ',lv:2,ic:'🛍️',rar:2,go:'place',cat:'shop',f:'長岡にある大きなショッピングセンター。名前は「水戸南」だけど、住所は茨城町だよ。西松屋やマクドナルド、ダイソーなどが入っているよ。'},
  {k:'マクドナルド',r:'まくどなるど',lv:2,ic:'🍔',rar:1,go:'place',cat:'shop',f:'ハンバーガーのお店。茨城町では、イオンタウン水戸南の中にあるよ。'},
  {k:'ダイソー',r:'だいそー',lv:2,ic:'🧺',rar:1,go:'place',cat:'shop',f:'日用品や文ぼう具などが買える、100円ショップ。茨城町では、イオンタウン水戸南の中にあるよ。'},
@@ -541,10 +541,90 @@ const WORDS = [
  {k:'ひぬま保育園',r:'ひぬまほいくえん',lv:2,ic:'🏠',rar:1,go:'place',cat:'school',f:'長岡にある{保育園|ほいくえん}。「ひぬま」の名前がついているよ。'},
  {k:'ウィステリアナーサリースクール',r:'うぃすてりあなーさりーすくーる',lv:3,ic:'🏠',rar:1,go:'place',cat:'school',f:'桜の郷にある{保育園|ほいくえん}。「ウィステリア」は、ふじの花という意味だよ。'},
  {k:'茨城東高等学校',r:'いばらきひがしこうとうがっこう',lv:3,ic:'🏫',rar:2,go:'place',cat:'school',f:'小幡にある、茨城県立の高校。みんなが大きくなったら、行くことになるかもしれないね。'},
+ {k:'合唱',r:'がっしょう',lv:1,ic:'🎵',rar:1,go:'thing',cat:'life',f:'みんなで こえを あわせて うたうこと。となりの 人の こえも きいてみよう。'},
+ {k:'運動会',r:'うんどうかい',lv:2,ic:'🏃',rar:1,go:'thing',cat:'life',f:'かけっこや たまいれなど、みんなで からだを うごかす 日。ゴールの ときの えがおが すてきだよ。'},
+ {k:'登校',r:'とうこう',lv:1,ic:'🎒',rar:1,go:'thing',cat:'life',f:'学校に 行くこと。あさ、なかよしの 友だちと あるいて 行くのも たのしいね。'},
+ {k:'下校',r:'げこう',lv:1,ic:'🌇',rar:1,go:'thing',cat:'life',f:'学校から かえること。かえり道では、まわりの くるまに ちゅういしよう。'},
+ {k:'まち探検',r:'まちたんけん',lv:2,ic:'🔍',rar:2,go:'thing',cat:'life',f:'町を あるいて、たのしい ところや はっけんを さがす 学習。この ゲームも 町の たんけんだね。'},
+ {k:'遠足',r:'えんそく',lv:1,ic:'🍙',rar:1,go:'thing',cat:'life',f:'おべんとうを もって、みんなで 出かける 学校の 行じ。バスの 中も わくわくするね。'},
+ {k:'水泳',r:'すいえい',lv:1,ic:'🏊',rar:1,go:'thing',cat:'life',f:'プールで およぐ 学習。なつの 体育の 時間が たのしみだね。'},
+ {k:'体育',r:'たいいく',lv:1,ic:'⚽',rar:1,go:'thing',cat:'life',f:'からだを うごかして、つよく 元気に なる 学習。'},
+ {k:'国語',r:'こくご',lv:1,ic:'📖',rar:1,go:'thing',cat:'life',f:'ことばや 文しょうを まなぶ 学習。タイピングも ことばの れんしゅうに なるよ。'},
+ {k:'算数',r:'さんすう',lv:1,ic:'➕',rar:1,go:'thing',cat:'life',f:'かずや かたちを まなぶ 学習。たし算、ひき算から はじまるよ。'},
+ {k:'なわとび',r:'なわとび',lv:1,ic:'🪢',rar:1,go:'thing',cat:'life',f:'なわを まわして とぶ あそび。ゲームの つぎは、ほんものの なわとびに ちょうせんしてみよう！'},
+ {k:'音楽',r:'おんがく',lv:1,ic:'🎵',rar:1,go:'thing',cat:'life',f:'うたを うたったり、がっきを えんそうしたりする 学習。'},
+ {k:'理科',r:'りか',lv:1,ic:'🧪',rar:1,go:'thing',cat:'life',f:'しぜんの ふしぎを じっけんや かんさつで しらべる 学習。{涸沼|ひぬま}の いきものも 理科の ざいりょうだね。'},
+ {k:'社会',r:'しゃかい',lv:1,ic:'🌏',rar:1,go:'thing',cat:'life',f:'町や くらしの ことを まなぶ 学習。茨城町の ことも 社会で まなぶよ。'},
+ {k:'生活',r:'せいかつ',lv:1,ic:'🌱',rar:1,go:'thing',cat:'life',f:'1・2年生で まなぶ 学習。あさがおを そだてたり、町を たんけんしたりするよ。'},
+ {k:'茨城県',r:'いばらきけん',lv:2,ic:'🗾',rar:2,go:'place',cat:'place',f:'わたしたちが すんでいる 県。{県庁|けんちょう}は 水戸市に あるよ。'},
+ {k:'東茨城郡',r:'ひがしいばらきぐん',lv:2,ic:'🗾',rar:2,go:'place',cat:'place',f:'いくつかの 町や むらを まとめた よび名。茨城町の ほかに、{大洗町|おおあらいまち}と 城里町が あるよ。'},
+ {k:'ランドセル',r:'らんどせる',lv:1,ic:'🎒',rar:1,go:'thing',cat:'life',f:'学校に もっていく かばん。教科書や ノートを 入れて、せおって あるくよ。'},
+ {k:'宿泊学習',r:'しゅくはくがくしゅう',lv:3,ic:'🏕️',rar:2,go:'thing',cat:'life',f:'学校の みんなで 出かけて、とまりがけで まなぶ 行じ。ふだんと ちがう 時間が すごせるよ。'},
+ {k:'修学旅行',r:'しゅうがくりょこう',lv:2,ic:'🚄',rar:3,go:'thing',cat:'life',f:'6年生が みんなで 旅行して、見学したり まなんだりする 行じ。思い出に のこるよ。'},
+ {k:'夏休み',r:'なつやすみ',lv:1,ic:'🍉',rar:2,go:'thing',cat:'life',f:'学校が おやすみに なる、あつい 夏の 長い 休み。プールや 花火が たのしみだね。'},
+ {k:'冬休み',r:'ふゆやすみ',lv:1,ic:'⛄',rar:2,go:'thing',cat:'life',f:'12月の おわりから 1月の はじめまでの 休み。お正月も やって くるよ。'},
+ {k:'春休み',r:'はるやすみ',lv:1,ic:'🌷',rar:2,go:'thing',cat:'life',f:'学年が かわる まえの 休み。あたらしい 友だちに 会うのが たのしみだね。'},
+ {k:'ゴールデンウィーク',r:'ごーるでんうぃーく',lv:2,ic:'🎏',rar:2,go:'thing',cat:'life',f:'4月の おわりから 5月の はじめに、休みが つづく 時期。こいのぼりを 見かけるよ。'},
+ {k:'インフルエンザ',r:'いんふるえんざ',lv:2,ic:'🌡️',rar:2,go:'thing',cat:'life',f:'冬に はやりやすい 病気。てあらい・うがいを して、かからないように しよう。'},
+ {k:'保健室',r:'ほけんしつ',lv:1,ic:'🩹',rar:2,go:'place',cat:'life',f:'けがを したり 具合が わるく なったりした とき、行く 部屋。先生が 手あてを してくれるよ。'},
+ {k:'卒業式',r:'そつぎょうしき',lv:2,ic:'🎓',rar:2,go:'thing',cat:'life',f:'学校を そつぎょうする 日の 式。「ありがとう」を つたえる 大切な 日だよ。'},
+ {k:'入学式',r:'にゅうがくしき',lv:2,ic:'🌸',rar:2,go:'thing',cat:'life',f:'あたらしい 学校に 入る 日の 式。ピカピカの ランドセルで 行くよ。'},
+ {k:'委員会',r:'いいんかい',lv:1,ic:'🏅',rar:2,go:'thing',cat:'life',f:'学校の しごとを 分たんして 行う 友だちの あつまり。みんなの ために はたらくよ。'},
+ {k:'クラブ活動',r:'くらぶかつどう',lv:2,ic:'⚾',rar:2,go:'thing',cat:'life',f:'すきな ことを、学年を こえた なかまと たのしむ 活動。'},
+ {k:'体育館',r:'たいいくかん',lv:2,ic:'🏟️',rar:2,go:'place',cat:'life',f:'体育や 行じを する、大きな 建物。ひろくて ひびきが いいね。'},
+ {k:'プール',r:'ぷーる',lv:1,ic:'🏊',rar:1,go:'place',cat:'life',f:'学校や まちに ある、およぐ ための 水の ばしょ。'},
+ {k:'教科書',r:'きょうかしょ',lv:2,ic:'📚',rar:2,go:'thing',cat:'life',f:'学校で つかう 本。毎日 かばんに 入れて もちはこぶよ。'},
+ {k:'連絡帳',r:'れんらくちょう',lv:2,ic:'📒',rar:2,go:'thing',cat:'life',f:'先生や おうちの 人に 大事な ことを つたえる ノート。あしたの よていも かくよ。'},
+ {k:'国道6号',r:'こくどうろくごう',lv:2,ic:'🛣️',rar:2,go:'place',cat:'place',f:'茨城町を 通る 大きな 道。長岡バイパスなど、まっすぐ のびる 道が あるよ。'},
+ {k:'オテントサマ',r:'おてんとさま',lv:2,ic:'☕',rar:3,go:'place',cat:'shop',f:'茨城町に ある カフェ。ゆっくり お茶の 時間を すごせるよ。'},
+ {k:'涸沼前川',r:'ひぬままえがわ',lv:2,ic:'🏞️',rar:2,go:'place',cat:'nature',f:'{涸沼|ひぬま}川と ならんで 町の まん中を ながれる 川。やがて {涸沼|ひぬま}に 入るよ。'},
+ {k:'メロン',r:'めろん',lv:1,ic:'🍈',rar:2,go:'food',cat:'shop',f:'茨城県は メロンづくりが さかんな 県。あまくて いい においが するよ。'},
+ {k:'農業大学校',r:'のうぎょうだいがっこう',lv:3,ic:'🌱',rar:2,go:'place',cat:'school',f:'長岡に ある、{農業|のうぎょう}を まなぶ 学校。野さいや くだものの そだて方を ならうよ。'},
+ {k:'消防学校',r:'しょうぼうがっこう',lv:2,ic:'🚒',rar:2,go:'place',cat:'school',f:'長岡に ある、{消防|しょうぼう}の しごとを まなぶ 学校。火事から 人を まもる れんしゅうを するよ。'},
+ {k:'長岡射撃場',r:'ながおかしゃげきじょう',lv:3,ic:'🎯',rar:2,go:'place',cat:'place',f:'長岡に ある、{陸上自衛隊|りくじょうじえいたい}の しせつ。かってに 中に 入っては いけないよ。'},
+ {k:'長岡公園',r:'ながおかこうえん',lv:2,ic:'🌳',rar:2,go:'place',cat:'place',f:'長岡に ある 公園。あそんだり さんぽしたり できる ばしょだよ。'},
+ {k:'常磐道',r:'じょうばんどう',lv:2,ic:'🛣️',rar:2,go:'place',cat:'place',f:'東京の ほうから 茨城県を 通って、福島県へ むかう 高速道ろ。'},
+ {k:'納屋cafe',r:'なやかふぇ',lv:1,ic:'☕',rar:3,go:'place',cat:'shop',f:'{下土師|しもはじ}に ある カフェ。「{納屋|なや}」の 名前が ついているよ。'},
+ {k:'熊野神社',r:'くまのじんじゃ',lv:2,ic:'⛩️',rar:2,go:'place',cat:'place',f:'神社では 手を あわせて、ていねいに おまいりしよう。地いきの 人が だいじに している ばしょだよ。'},
+ {k:'うおふね',r:'うおふね',lv:1,ic:'🍤',rar:2,go:'place',cat:'shop',f:'{涸沼|ひぬま}の ちかくに ある おみせ。{涸沼|ひぬま}で とれた 魚などが あじわえるよ。'},
+ {k:'うなぎや',r:'うなぎや',lv:1,ic:'🍱',rar:2,go:'food',cat:'shop',f:'下石崎に ある、うなぎりょうりの おみせ。'},
+ {k:'大杉神社',r:'おおすぎじんじゃ',lv:2,ic:'⛩️',rar:3,go:'place',cat:'place',f:'{涸沼|ひぬま}の ほとりに ある 神社。7月の おわりごろ、{広浦|ひろうら}で おまつりが 行われるよ。'},
+ {k:'茨城町水道課',r:'いばらきまちすいどうか',lv:3,ic:'💧',rar:2,go:'place',cat:'place',f:'町の {役場|やくば}の 中の 課。みんなの おうちに きれいな 水を とどける しごとを して いるよ。'},
+ {k:'涸沼サイクリングロード',r:'ひぬまさいくりんぐろーど',lv:3,ic:'🚲',rar:3,go:'place',cat:'place',f:'{涸沼|ひぬま}の まわりを 自転車で 走れる コース。風を 感じながら 景色を たのしめるよ。'},
+ {k:'北関東道',r:'きたかんとうどう',lv:2,ic:'🛣️',rar:2,go:'place',cat:'place',f:'北関東自動車道の よび名。茨城町の 北の ほうを 通り、茨城町西インターと 茨城町東インターが あるよ。'},
+ {k:'セブンイレブン',r:'せぶんいれぶん',lv:2,ic:'🏪',rar:1,go:'place',cat:'shop',f:'',card:false},
+ {k:'ローソン',r:'ろーそん',lv:1,ic:'🏪',rar:1,go:'place',cat:'shop',f:'',card:false},
+ {k:'ファミリーマート',r:'ふぁみりーまーと',lv:2,ic:'🏪',rar:1,go:'place',cat:'shop',f:'',card:false},
+ {k:'セイコーマート',r:'せいこーまーと',lv:2,ic:'🏪',rar:1,go:'place',cat:'shop',f:'',card:false},
+ {k:'おはようございます',r:'おはようございます',lv:2,ic:'🌅',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'こんにちは',r:'こんにちは',lv:1,ic:'☀️',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'さようなら',r:'さようなら',lv:1,ic:'👋',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'ごめんね',r:'ごめんね',lv:1,ic:'🙇',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'ごめんなさい',r:'ごめんなさい',lv:2,ic:'🙇',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'ありがとう',r:'ありがとう',lv:1,ic:'💗',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'ありがとうございます',r:'ありがとうございます',lv:3,ic:'💗',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'お願いします',r:'おねがいします',lv:2,ic:'🙏',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'いいよ',r:'いいよ',lv:1,ic:'⭕',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'嫌です',r:'いやです',lv:1,ic:'❌',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'やめて',r:'やめて',lv:1,ic:'✋',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'また今度ね',r:'またこんどね',lv:2,ic:'📅',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'また明日',r:'またあした',lv:1,ic:'🌅',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'一緒にやらない？',r:'いっしょにやらない',lv:2,ic:'👫',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'私はやらない',r:'わたしはやらない',lv:2,ic:'❌',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'僕はいらない',r:'ぼくはいらない',lv:2,ic:'❌',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'私もやりたい',r:'わたしもやりたい',lv:2,ic:'🙋',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'ブランコ',r:'ぶらんこ',lv:1,ic:'🛝',rar:1,go:'place',cat:'life',f:'',card:false},
+ {k:'すべり台',r:'すべりだい',lv:1,ic:'🛝',rar:1,go:'place',cat:'life',f:'',card:false},
+ {k:'うんてい',r:'うんてい',lv:1,ic:'🤸',rar:1,go:'place',cat:'life',f:'',card:false},
+ {k:'一輪車',r:'いちりんしゃ',lv:2,ic:'🚲',rar:1,go:'thing',cat:'life',f:'',card:false},
+ {k:'給食',r:'きゅうしょく',lv:2,ic:'🍱',rar:1,go:'thing',cat:'life',f:'',card:false},
+ {k:'昼休み',r:'ひるやすみ',lv:1,ic:'⏰',rar:1,go:'thing',cat:'life',f:'',card:false},
+ {k:'プリント',r:'ぷりんと',lv:1,ic:'📄',rar:1,go:'thing',cat:'life',f:'',card:false},
+ {k:'タイピング',r:'たいぴんぐ',lv:1,ic:'⌨️',rar:1,go:'thing',cat:'life',f:'',card:false},
 ];
 WORDS.forEach((w,i)=>w.id=i); // ※ idは もとの じゅんばんを まもる（ほぞんデータと むすびつくため）
 const CARDS=WORDS.filter(w=>w.card!==false); // ガチャで でる カード（タイピングだけの ことばも ある）
-const CATS=[['machi','🏘️ 町の なまえ'],['school','🏫 学校'],['place','📍 めいしょ・しせつ'],['kominkan','🏠 こうみんかん・センター'],['nature','🌿 しぜん・いきもの'],['shop','🛒 おみせ・しょくじ'],['thing','🎎 くらし・ぶんか']];
+const CATS=[['machi','🏘️ 町の なまえ'],['school','🏫 学校'],['life','🎒 学校の くらし'],['place','📍 めいしょ・しせつ'],['kominkan','🏠 こうみんかん・センター'],['nature','🌿 しぜん・いきもの'],['shop','🛒 おみせ・しょくじ'],['thing','🎎 くらし・ぶんか']];
 
 const COURSES = [
  {lv:1,name:'かんたん',ic:'🐚',icon:'shijimi',desc:'みじかい ことば',need:null},
@@ -556,7 +636,7 @@ const TITLES = [ // スコアで きまる しょうごう
  [2200,'ヒヌマイトトンボ'],[3000,'はにわ しょくにん'],[4000,'大戸のサクラ'],[5200,'ひぬまの ぬし'],[6600,'茨城町 タイピングはかせ'],[9000,'ひぬまの でんせつ'],
 ];
 const SJT='<svg class="sj"><use href="#sjm"/></svg>';
-const GAME_SEC = 60, GACHA_COST = 250, DUP_BACK = 15, PLAY_BONUS = 30, FIRST_BONUS = 100;
+const GAME_SEC = 60, GACHA_COST = 250, DUP_BACK = 25, PLAY_BONUS = 30, FIRST_BONUS = 100;
 const LV_MUL = {1:1,2:1.2,3:1.5}; // むずかしい コースほど てんすうが おおきい
 
 // ===== ローマ字 =====
@@ -583,6 +663,7 @@ function makeUnits(kana){
     const two=s.substr(i,2);
     if(two.length===2&&T[two]&&'ぁぃぅぇぉゃゅょ'.includes(two[1])){u.push({k:two,c:T[two].slice()});i++;continue}
     if(s[i]==='っ'||s[i]==='ん'){u.push({k:s[i],c:[]});continue}
+    if(/[A-Z]/.test(s[i])){u.push({k:s[i],c:[s[i]],up:true});continue} // 大もじ＝Shiftを おして うつ
     if(!T[s[i]]) throw new Error('ローマ字がない文字: '+s[i]+' in '+kana);
     u.push({k:s[i],c:T[s[i]].slice()});
   }
@@ -601,6 +682,7 @@ function makeUnits(kana){
 function makeMatcher(kana){return {u:makeUnits(kana),i:0,buf:''}}
 function press(m,k){
   const u=m.u[m.i]; if(!u) return false;
+  if(!u.up) k=k.toLowerCase();
   const nb=m.buf+k, ms=u.c.filter(c=>c.startsWith(nb));
   if(ms.length){
     m.buf=nb; u.ch=ms[0];
@@ -704,9 +786,79 @@ kinder:`<rect x="12" y="46" width="52" height="40" fill="#ffe9a8"/><path d="M6 4
 nursery:`<rect x="14" y="44" width="72" height="42" fill="#fff3d6"/><path d="M8 46L50 18l42 28z" fill="#ffb98a"/><circle cx="50" cy="62" r="14" fill="#d9a35a"/><circle cx="40" cy="50" r="5" fill="#d9a35a"/><circle cx="60" cy="50" r="5" fill="#d9a35a"/><circle cx="45" cy="60" r="2" fill="#3a2e4f"/><circle cx="55" cy="60" r="2" fill="#3a2e4f"/><ellipse cx="50" cy="67" rx="5" ry="3.5" fill="#f4d9b0"/><rect x="20" y="62" width="10" height="24" fill="#b9825a"/><rect x="70" y="60" width="10" height="10" fill="#bfe6f6"/>`,
 kodomoen:`<path d="M10 56a40 40 0 0 1 80 0" fill="none" stroke="#ef6a5a" stroke-width="5"/><path d="M18 56a32 32 0 0 1 64 0" fill="none" stroke="#ffd35c" stroke-width="5"/><path d="M26 56a24 24 0 0 1 48 0" fill="none" stroke="#6cc07a" stroke-width="5"/><rect x="18" y="56" width="64" height="30" fill="#fff3d6"/><path d="M12 58L50 36l38 22z" fill="#6bb4dc"/><rect x="42" y="66" width="16" height="20" fill="#b9825a"/><circle cx="28" cy="70" r="5" fill="#bfe6f6"/><circle cx="72" cy="70" r="5" fill="#bfe6f6"/>`,
 highschool:`<rect x="12" y="46" width="76" height="40" fill="#e6e0f0"/><rect x="36" y="30" width="28" height="18" fill="#cfc6e6"/><path d="M50 30V14h16l-4 5 4 5H50" fill="#ef6a5a"/><rect x="42" y="64" width="16" height="22" fill="#b9825a"/><rect x="18" y="54" width="14" height="12" fill="#bfe6f6"/><rect x="68" y="54" width="14" height="12" fill="#bfe6f6"/><rect x="40" y="36" width="20" height="6" fill="#fff"/><path d="M30 12l20-8 20 8-20 8z" fill="#3a2e4f"/><path d="M38 17v7q12 6 24 0v-7" fill="#3a2e4f"/><path d="M70 12v10" fill="none" stroke="#ffd35c" stroke-width="2.5"/>`,
+gassho:`<circle cx="44" cy="56" r="26" fill="#ffe1a8"/><path d="M32 50q4-4 8 0M50 50q4-4 8 0" fill="none"/><ellipse cx="44" cy="68" rx="7" ry="8" fill="#ef6a5a"/><path d="M76 40V14l14 4v22" fill="none"/><circle cx="71" cy="42" r="5" fill="#3a2e4f"/><circle cx="85" cy="42" r="5" fill="#3a2e4f"/><path d="M76 14l14 4" stroke-width="5"/>`,
+undokai:`<path d="M20 92V10" fill="none"/><path d="M20 10h52l-10 13 10 13H20z" fill="#ef6a5a"/><circle cx="46" cy="78" r="11" fill="#fff"/><circle cx="72" cy="82" r="9" fill="#ef6a5a"/><path d="M8 92h84" fill="none"/>`,
+tokou:`<circle cx="80" cy="18" r="9" fill="#ffd35c"/><rect x="36" y="46" width="28" height="30" rx="6" fill="#6bb4dc"/><rect x="62" y="48" width="14" height="24" rx="4" fill="#ef6a5a"/><circle cx="50" cy="32" r="14" fill="#ffe1a8"/><path d="M35 30Q36 14 50 14t15 16z" fill="#ffd35c"/><circle cx="45" cy="34" r="1.8" fill="#3a2e4f"/><circle cx="55" cy="34" r="1.8" fill="#3a2e4f"/><path d="M42 76v14M58 76v14M36 90h12M52 90h12" fill="none"/>`,
+geko:`<circle cx="22" cy="24" r="12" fill="#ff9a3d"/><path d="M8 40h30" fill="none" stroke="#ffb98a"/><rect x="36" y="46" width="28" height="30" rx="6" fill="#6bb4dc"/><rect x="62" y="48" width="14" height="24" rx="4" fill="#ef6a5a"/><circle cx="50" cy="32" r="14" fill="#ffe1a8"/><path d="M35 30Q36 14 50 14t15 16z" fill="#ffd35c"/><circle cx="45" cy="34" r="1.8" fill="#3a2e4f"/><circle cx="55" cy="34" r="1.8" fill="#3a2e4f"/><path d="M42 76v14M58 76v14M36 90h12M52 90h12" fill="none"/>`,
+tanken:`<rect x="10" y="18" width="64" height="56" rx="4" fill="#fff3d6"/><path d="M18 56Q34 28 50 50T68 30" fill="none" stroke="#6bb4dc" stroke-width="4"/><circle cx="26" cy="32" r="4" fill="#ef6a5a"/><circle cx="62" cy="58" r="20" fill="#bfe6f6"/><path d="M76 72l16 18" stroke-width="8"/>`,
+ensoku:`<path d="M50 14Q64 14 84 74Q86 86 74 86H26Q14 86 16 74Q36 14 50 14z" fill="#fff"/><path d="M34 62h32v24H34z" fill="#3a2e4f"/><circle cx="50" cy="40" r="2.5" fill="#ef6a5a" stroke="none"/>`,
+swim:`<rect x="6" y="56" width="88" height="34" rx="4" fill="#7cc4e8"/><circle cx="38" cy="48" r="13" fill="#ffe1a8"/><path d="M25 46Q27 32 38 32t13 14z" fill="#ef6a5a"/><path d="M48 56Q64 20 90 44" fill="none" stroke-width="7"/><path d="M48 56Q64 20 90 44" fill="none" stroke="#ffe1a8" stroke-width="3"/><path d="M14 72q6-4 12 0t12 0M52 78q6-4 12 0t12 0" fill="none" stroke="#fff" stroke-width="2.5"/>`,
+taiiku:`<circle cx="50" cy="50" r="38" fill="#ef6a5a"/><path d="M14 50h72M50 12v76" fill="none" stroke="#fff3d6" stroke-width="4"/><path d="M22 28Q50 44 78 28M22 72Q50 56 78 72" fill="none" stroke="#fff3d6" stroke-width="4"/>`,
+kokugo:`<rect x="18" y="12" width="64" height="76" rx="5" fill="#fff3d6"/><rect x="18" y="12" width="12" height="76" fill="#ef6a5a"/><text x="56" y="62" font-size="38" text-anchor="middle" fill="#3a2e4f" stroke="none" font-family="sans-serif" font-weight="700">あ</text>`,
+sansu:`<rect x="12" y="14" width="76" height="72" rx="5" fill="#fff3d6"/><path d="M34 32v22M23 43h22" stroke="#ef6a5a" stroke-width="5" fill="none"/><path d="M58 43h22" stroke="#6bb4dc" stroke-width="5" fill="none"/><path d="M24 70h22M56 66h24M56 74h24" stroke="#6cc07a" stroke-width="5" fill="none"/>`,
+nawatobi:`<path d="M26 14Q6 96 50 90Q94 96 74 14" fill="none" stroke="#3a2e4f" stroke-width="9"/><path d="M26 14Q6 96 50 90Q94 96 74 14" fill="none" stroke="#ef6a5a" stroke-width="5"/><rect x="18" y="4" width="14" height="24" rx="5" fill="#6bb4dc"/><rect x="68" y="4" width="14" height="24" rx="5" fill="#6bb4dc"/><path d="M38 70V54M62 70V54" stroke-width="5"/><ellipse cx="36" cy="74" rx="9" ry="5" fill="#ffd35c"/><ellipse cx="64" cy="74" rx="9" ry="5" fill="#ffd35c"/>`,
+ongaku:`<path d="M34 72V22l46-8v50" fill="none" stroke-width="5"/><path d="M34 34l46-8" stroke-width="7"/><ellipse cx="26" cy="74" rx="12" ry="9" fill="#3a2e4f"/><ellipse cx="72" cy="66" rx="12" ry="9" fill="#3a2e4f"/>`,
+rika:`<path d="M42 12h16v24l24 46q4 8-6 8H24q-10 0-6-8l24-46z" fill="#bfe6f6"/><path d="M32 62h36l14 20q4 8-6 8H24q-10 0-6-8z" fill="#6cc07a"/><circle cx="46" cy="50" r="4" fill="#fff"/><circle cx="56" cy="40" r="3" fill="#fff"/><path d="M38 12h24" stroke-width="5"/>`,
+shakai:`<circle cx="50" cy="44" r="34" fill="#7cc4e8"/><path d="M28 28Q40 22 44 34Q38 44 30 40zM54 46Q70 40 74 56Q66 70 56 62zM46 66Q54 64 52 76Q46 78 46 66z" fill="#6cc07a"/><path d="M50 78v10M32 90h36" fill="none"/>`,
+seikatsu:`<path d="M30 70L38 92H62L70 70z" fill="#c9795a"/><path d="M50 70V50" fill="none" stroke="#6cc07a" stroke-width="4"/><path d="M50 62Q30 60 26 48Q42 46 50 62zM50 62Q70 60 74 48Q58 46 50 62z" fill="#6cc07a"/><circle cx="50" cy="32" r="22" fill="#9b6fd0"/><path d="M50 20l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#fff" stroke-width="2"/>`,
+kenmap:`<path d="M30 12L66 18L78 40L70 60L74 86L44 90L28 70L22 42z" fill="#9ad88a"/><path d="M50 62C40 50 38 46 38 40a12 12 0 0 1 24 0c0 6-4 10-12 22z" fill="#ef6a5a"/><circle cx="50" cy="40" r="4" fill="#fff3d6"/>`,
+gunmap:`<path d="M16 30L50 14L86 28L84 66L52 88L18 68z" fill="#fff3d6" stroke-dasharray="6 5"/><path d="M34 40L62 36L58 66L34 40" fill="none" stroke="#6bb4dc" stroke-width="3"/><circle cx="34" cy="40" r="7" fill="#ef6a5a"/><circle cx="62" cy="36" r="7" fill="#ffd35c"/><circle cx="58" cy="66" r="7" fill="#6cc07a"/>`,
+randoseru:`<rect x="22" y="14" width="56" height="74" rx="12" fill="#ef6a5a"/><path d="M22 40Q50 62 78 40V30Q50 50 22 30z" fill="#c94d3f"/><rect x="43" y="44" width="14" height="14" rx="3" fill="#ffd35c"/><path d="M22 70q-8 4-8 14M78 70q8 4 8 14" fill="none" stroke-width="5"/>`,
+shukuhaku:`<path d="M70 12a18 18 0 1 0 14 28A14 14 0 0 1 70 12z" fill="#ffd35c"/><path d="M24 24l3 6 6 1-5 4 1 6-5-3-5 3 1-6-5-4 6-1z" fill="#ffd35c" stroke-width="2"/><rect x="8" y="62" width="84" height="26" rx="6" fill="#bfe6f6"/><rect x="12" y="52" width="26" height="14" rx="6" fill="#fff"/><path d="M44 62v26" fill="none"/>`,
+shugaku:`<path d="M6 70V56Q10 36 40 36H72Q92 40 94 62V70z" fill="#fff"/><path d="M94 62Q86 60 76 60" fill="none"/><path d="M6 62h88" stroke="#6bb4dc" stroke-width="6" fill="none"/><rect x="18" y="44" width="10" height="9" fill="#bfe6f6"/><rect x="34" y="44" width="10" height="9" fill="#bfe6f6"/><rect x="50" y="44" width="10" height="9" fill="#bfe6f6"/><circle cx="26" cy="76" r="6" fill="#bfe6f6"/><circle cx="70" cy="76" r="6" fill="#bfe6f6"/><path d="M6 84h88" fill="none"/>`,
+natsu:`<path d="M10 40a40 40 0 0 0 80 0z" fill="#6cc07a"/><path d="M16 40a34 34 0 0 0 68 0z" fill="#ef6a5a"/><circle cx="36" cy="52" r="2.5" fill="#3a2e4f" stroke="none"/><circle cx="50" cy="60" r="2.5" fill="#3a2e4f" stroke="none"/><circle cx="64" cy="52" r="2.5" fill="#3a2e4f" stroke="none"/><circle cx="80" cy="18" r="9" fill="#ffd35c"/>`,
+fuyu:`<circle cx="50" cy="68" r="22" fill="#fff"/><circle cx="50" cy="36" r="15" fill="#fff"/><path d="M36 26h28l-3-12H39z" fill="#6bb4dc"/><circle cx="45" cy="34" r="2" fill="#3a2e4f"/><circle cx="55" cy="34" r="2" fill="#3a2e4f"/><path d="M50 38l10 3-10 2z" fill="#ff9a3d" stroke-width="2"/><circle cx="50" cy="60" r="2.5" fill="#3a2e4f"/><circle cx="50" cy="72" r="2.5" fill="#3a2e4f"/><path d="M22 54l-10-8M78 54l10-8" fill="none" stroke="#b9825a" stroke-width="3"/>`,
+haru:`<path d="M50 90V54" fill="none" stroke="#6cc07a" stroke-width="5"/><path d="M50 82Q26 78 22 54Q42 54 50 82zM50 82Q74 78 78 54Q58 54 50 82z" fill="#6cc07a"/><path d="M28 18Q28 52 50 56Q72 52 72 18L61 30L50 12L39 30z" fill="#f6a6c1"/>`,
+gw:`<path d="M16 96V4" fill="none" stroke-width="4"/><path d="M16 8h6" fill="none"/><path d="M26 28Q44 14 60 28L82 18V46L60 36Q44 50 26 36z" fill="#ef6a5a"/><circle cx="36" cy="30" r="2.5" fill="#fff" stroke-width="2"/><path d="M26 66Q44 52 60 66L82 56V84L60 74Q44 88 26 74z" fill="#6bb4dc"/><circle cx="36" cy="68" r="2.5" fill="#fff" stroke-width="2"/>`,
+flu:`<rect x="40" y="10" width="20" height="62" rx="10" fill="#fff"/><circle cx="50" cy="78" r="14" fill="#ef6a5a"/><path d="M50 78V30" stroke="#ef6a5a" stroke-width="6" fill="none"/><path d="M60 24h8M60 36h8M60 48h8" fill="none" stroke-width="2.5"/><path d="M20 40l6-6M26 40l-6-6M78 62l6-6M84 62l-6-6" fill="none" stroke="#9b6fd0" stroke-width="3"/>`,
+hoken:`<rect x="26" y="8" width="48" height="40" rx="5" fill="#fff"/><path d="M50 16v24M38 28h24" stroke="#ef6a5a" stroke-width="8" fill="none"/><rect x="8" y="66" width="84" height="22" rx="5" fill="#bfe6f6"/><rect x="12" y="56" width="26" height="14" rx="6" fill="#fff"/><path d="M8 88v6M92 88v6" fill="none"/>`,
+sotsugyo:`<rect x="12" y="34" width="76" height="30" rx="15" fill="#fff3d6" transform="rotate(-12 50 50)"/><path d="M42 30l8 40" stroke="#ef6a5a" stroke-width="9" fill="none"/><path d="M50 56l-14 18l-2-12zM50 56l14 18l2-12z" fill="#ef6a5a"/>`,
+nyugaku:`<rect x="14" y="14" width="72" height="50" rx="5" fill="#fff3d6"/><path d="M34 88V64M66 88V64" stroke-width="5" fill="none"/><circle cx="32" cy="32" r="9" fill="#f6a6c1"/><circle cx="56" cy="24" r="8" fill="#f6a6c1"/><circle cx="68" cy="46" r="10" fill="#f6a6c1"/><circle cx="40" cy="50" r="7" fill="#f6a6c1"/>`,
+iinkai:`<circle cx="50" cy="38" r="26" fill="#ffd35c"/><circle cx="50" cy="38" r="16" fill="#fff3d6"/><path d="M50 28l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z" fill="#ef6a5a" stroke-width="2"/><path d="M36 58l-8 32l14-8l6 10l4-30zM64 58l8 32l-14-8l-6 10l-4-30z" fill="#6bb4dc"/>`,
+club:`<path d="M20 90L52 40L62 30L70 40L62 50L28 92z" fill="#d9a35a"/><path d="M58 22L76 20L80 38L66 46z" fill="#d9a35a"/><circle cx="74" cy="72" r="16" fill="#fff"/><path d="M64 64q8 8 4 20M84 62q-6 10 0 20" fill="none" stroke="#ef6a5a" stroke-width="2.5"/>`,
+taiikukan:`<rect x="10" y="50" width="80" height="38" fill="#fff3d6"/><path d="M6 52Q50 4 94 52z" fill="#6bb4dc"/><rect x="40" y="64" width="20" height="24" fill="#b9825a"/><circle cx="24" cy="66" r="8" fill="#ff9a3d"/><circle cx="76" cy="66" r="8" fill="#ff9a3d"/>`,
+pool:`<rect x="8" y="44" width="84" height="46" rx="5" fill="#7cc4e8"/><path d="M8 62h84M8 76h84" stroke="#fff" stroke-width="2.5" stroke-dasharray="8 6" fill="none"/><circle cx="50" cy="26" r="17" fill="#fff"/><path d="M50 9a17 17 0 0 1 12 5l-8 8a6 6 0 0 0-4-1zM50 43a17 17 0 0 1-12-5l8-8a6 6 0 0 0 8 0z" fill="#ef6a5a" stroke-width="2"/><circle cx="50" cy="26" r="6" fill="#fff8ee"/>`,
+kyokasho:`<rect x="14" y="62" width="72" height="22" rx="3" fill="#6bb4dc"/><rect x="20" y="40" width="64" height="22" rx="3" fill="#ef6a5a"/><rect x="12" y="18" width="66" height="22" rx="3" fill="#ffd35c"/><path d="M22 73h20M28 51h20M20 29h20" stroke="#fff" stroke-width="3" fill="none"/>`,
+renrakucho:`<rect x="22" y="10" width="54" height="80" rx="5" fill="#ffd35c"/><path d="M22 20h-6M22 36h-6M22 52h-6M22 68h-6" stroke-width="4" fill="none"/><rect x="34" y="24" width="30" height="22" fill="#fff"/><path d="M38 34h22M38 40h14" fill="none" stroke-width="2.5"/><path d="M70 90L84 40l8 4L78 94z" fill="#ef6a5a"/>`,
+kokudo6:`<path d="M16 14h68v46Q84 80 50 92Q16 80 16 60z" fill="#3b78c4"/><path d="M24 22h52v38Q76 74 50 84Q24 74 24 60z" fill="none" stroke="#fff" stroke-width="2.5"/><text x="50" y="68" font-size="46" text-anchor="middle" fill="#fff" stroke="none" font-family="sans-serif" font-weight="700">6</text>`,
+cafe1:`<path d="M18 44h58v22Q76 86 46 86Q18 86 18 66z" fill="#fff"/><path d="M76 50h8q8 0 8 10t-8 10h-8" fill="none"/><ellipse cx="47" cy="44" rx="29" ry="8" fill="#b9825a"/><circle cx="47" cy="44" r="5" fill="#ffd35c" stroke-width="2"/><path d="M36 30q-6-8 0-16M50 30q-6-8 0-16M64 30q-6-8 0-16" fill="none" stroke-width="2.5"/><path d="M10 92h74" fill="none"/>`,
+naya:`<path d="M10 90V50L30 24h40l20 26v40z" fill="#c9795a"/><path d="M10 50L30 24h40l20 26" fill="none"/><rect x="34" y="52" width="32" height="38" fill="#fff3d6"/><path d="M34 52l32 38M66 52L34 90" fill="none" stroke-width="2.5"/><rect x="42" y="30" width="16" height="10" fill="#fff3d6"/><path d="M80 82h12v10H80z" fill="#fff"/>`,
+melon:`<circle cx="50" cy="56" r="34" fill="#bfe6a0"/><path d="M20 44Q50 60 80 44M18 60Q50 76 82 60M34 26Q26 56 38 86M50 22V90M66 26Q74 56 62 86" fill="none" stroke="#fff" stroke-width="2.5"/><path d="M50 22V8M50 12q8-6 16 0" fill="none" stroke-width="4"/>`,
+sprout:`<path d="M6 76Q50 64 94 76V92H6z" fill="#b9825a"/><path d="M50 74V44" fill="none" stroke-width="5"/><path d="M50 52Q22 50 18 22Q46 22 50 52zM50 46Q78 44 82 16Q54 16 50 46z" fill="#6cc07a"/><circle cx="84" cy="80" r="0" fill="none"/>`,
+shobo:`<rect x="8" y="42" width="84" height="32" rx="4" fill="#ef6a5a"/><path d="M62 42V28h14l12 14z" fill="#ef6a5a"/><path d="M66 32h8l6 8H66z" fill="#bfe6f6" stroke-width="2"/><path d="M14 36h42M18 30h34" stroke="#b9825a" stroke-width="3" fill="none"/><circle cx="26" cy="78" r="9" fill="#3a2e4f"/><circle cx="72" cy="78" r="9" fill="#3a2e4f"/><circle cx="26" cy="78" r="3" fill="#fff" stroke="none"/><circle cx="72" cy="78" r="3" fill="#fff" stroke="none"/><path d="M40 24l4 6 4-6" fill="none" stroke="#ffd35c" stroke-width="3"/>`,
+shageki:`<path d="M50 62V92M30 92h40" fill="none"/><circle cx="50" cy="38" r="32" fill="#fff"/><circle cx="50" cy="38" r="22" fill="#ef6a5a"/><circle cx="50" cy="38" r="12" fill="#fff"/><circle cx="50" cy="38" r="5" fill="#3a2e4f"/><circle cx="62" cy="30" r="2.5" fill="#3a2e4f" stroke="none"/><circle cx="38" cy="46" r="2.5" fill="#3a2e4f" stroke="none"/>`,
+highway:`<path d="M30 92V50M70 92V50" stroke-width="5" fill="none"/><rect x="10" y="12" width="80" height="42" rx="5" fill="#2f8f5a"/><path d="M50 46V22M40 32l10-10 10 10" fill="none" stroke="#fff" stroke-width="5"/><rect x="26" y="64" width="48" height="16" rx="6" fill="#ffd35c" transform="translate(0 14)"/><circle cx="36" cy="94" r="0" fill="none"/>`,
+road:`<path d="M40 36L8 92H92L60 36z" fill="#8a8aa6"/><path d="M50 40v8M50 56v10M50 74v12" stroke="#fff" stroke-width="4" fill="none"/><circle cx="76" cy="20" r="11" fill="#ffd35c"/><path d="M6 36h88" fill="none"/><path d="M10 36Q26 22 40 36M60 36Q74 26 90 36" fill="#6cc07a"/>`,
+shrine:`<path d="M10 40Q50 6 90 40z" fill="#c9795a"/><rect x="20" y="40" width="60" height="38" fill="#fff3d6"/><rect x="42" y="52" width="16" height="26" fill="#b9825a"/><path d="M20 78h60M14 86h72" fill="none"/><path d="M30 14l8 8M70 14l-8 8" fill="none" stroke-width="3"/>`,
+cedar:`<path d="M22 92V40Q22 8 50 8t28 32V92z" fill="#3f8f5a"/><path d="M20 60Q50 72 80 60" fill="none" stroke="#fff3d6" stroke-width="6"/><path d="M26 62l-2 10M40 66l-2 10M60 66l2 10M74 62l2 10" fill="none" stroke="#fff" stroke-width="3"/><path d="M36 92V80M64 92V80M32 82h36" stroke="#ef6a5a" stroke-width="5" fill="none"/>`,
+uofune:`<ellipse cx="50" cy="66" rx="42" ry="22" fill="#fff"/><ellipse cx="50" cy="64" rx="30" ry="14" fill="#fff3d6"/><path d="M26 60Q34 40 52 52Q44 70 26 60z" fill="#f2b134"/><path d="M48 62Q58 36 78 50Q70 70 48 62z" fill="#f2b134"/><path d="M34 44q6-6 10 0M62 38q6-6 10 0" fill="none" stroke="#ffd35c" stroke-width="2.5"/><path d="M30 24l16 10" stroke="#b9825a" stroke-width="3" fill="none"/>`,
+unagidon:`<path d="M12 46h76q0 40-38 40T12 46z" fill="#ef6a5a"/><path d="M12 46h76" fill="none"/><ellipse cx="50" cy="44" rx="38" ry="12" fill="#fff"/><path d="M18 40Q28 28 82 36Q86 46 80 48Q40 54 18 46z" fill="#8a5a3a"/><path d="M34 32l4 16M50 32l3 18M66 34l2 14" fill="none" stroke="#c98a4a" stroke-width="3"/><path d="M78 14L96 6" stroke="#b9825a" stroke-width="3" fill="none"/>`,
+suido:`<path d="M12 28h44q10 0 10 10v8" fill="none" stroke-width="12"/><path d="M12 28h44q10 0 10 10v8" fill="none" stroke="#bfc8d6" stroke-width="6"/><path d="M60 46h12v6H60z" fill="#bfc8d6"/><path d="M66 60C56 74 54 80 54 84a12 12 0 0 0 24 0c0-4-2-10-12-24z" fill="#6bb4dc"/><path d="M60 82q2 4 6 4" fill="none" stroke="#fff" stroke-width="2.5"/>`,
+cycling:`<circle cx="24" cy="66" r="18" fill="none"/><circle cx="76" cy="66" r="18" fill="none"/><path d="M24 66L42 36H66L76 66M42 36L52 66H24M52 66L66 36" fill="none" stroke="#ef6a5a" stroke-width="4"/><path d="M36 30h12M62 30l6-8h8" fill="none" stroke-width="5"/>`,
+conbini:`<rect x="10" y="44" width="80" height="44" fill="#fff"/><rect x="10" y="14" width="80" height="14" rx="3" fill="#ffd35c"/><path d="M6 28h88l-6 16H12z" fill="#fff"/><path d="M6 28h14l-2 16M34 28h14l-2 16M62 28h14l-2 16" fill="#ef6a5a" stroke-width="2"/><path d="M20 28l-2 16h16l2-16M48 28l-2 16h16l2-16M76 28l-2 16h14l4-16" fill="#6cc07a" stroke-width="2" opacity="0"/><rect x="38" y="56" width="24" height="32" fill="#bfe6f6"/><path d="M50 56v32" fill="none"/><rect x="16" y="54" width="16" height="14" fill="#bfe6f6"/><rect x="68" y="54" width="16" height="14" fill="#bfe6f6"/>`,
+sunrise:`<path d="M16 66a34 34 0 0 1 68 0z" fill="#ffd35c"/><path d="M50 12v10M20 30l7 7M80 30l-7 7M6 56h10M84 56h10" fill="none"/><rect x="6" y="66" width="88" height="22" rx="4" fill="#bfe6f6"/>`,
+hello:`<path d="M10 14h80v52H52L34 88V66H10z" fill="#fff"/><circle cx="50" cy="40" r="13" fill="#ffd35c"/><path d="M50 16v6M50 58v6M26 40h6M68 40h6M33 23l4 4M67 23l-4 4" fill="none" stroke-width="2.5"/>`,
+bye:`<rect x="30" y="46" width="40" height="40" rx="14" fill="#ffe1a8"/><rect x="30" y="20" width="9" height="34" rx="4.5" fill="#ffe1a8"/><rect x="42" y="12" width="9" height="42" rx="4.5" fill="#ffe1a8"/><rect x="54" y="14" width="9" height="40" rx="4.5" fill="#ffe1a8"/><rect x="66" y="24" width="9" height="32" rx="4.5" fill="#ffe1a8"/><path d="M14 40q-6 10 0 22M86 40q6 10 0 22" fill="none"/>`,
+sorry:`<circle cx="50" cy="54" r="34" fill="#ffe1a8"/><path d="M32 46l12 4M68 46l-12 4" fill="none"/><circle cx="38" cy="56" r="2.5" fill="#3a2e4f"/><circle cx="62" cy="56" r="2.5" fill="#3a2e4f"/><path d="M40 74q10-6 20 0" fill="none"/><path d="M82 20c-6 8-8 12-8 15a8 8 0 0 0 16 0c0-3-2-7-8-15z" fill="#6bb4dc"/>`,
+thanks:`<path d="M10 14h80v52H52L34 88V66H10z" fill="#fff"/><path d="M50 56C26 40 28 22 40 22q10 0 10 9q0-9 10-9c12 0 14 18-10 34z" fill="#ef6a5a"/>`,
+please:`<path d="M50 90L32 64Q28 36 46 10q4 28 4 80z" fill="#ffe1a8"/><path d="M50 90L68 64Q72 36 54 10q-4 28-4 80z" fill="#ffd9a0"/><path d="M16 22l6 6M84 22l-6 6M10 46h8M82 46h8" fill="none" stroke="#ffd35c" stroke-width="3"/>`,
+ok:`<circle cx="50" cy="50" r="38" fill="#fff"/><circle cx="50" cy="50" r="22" fill="none" stroke="#ef6a5a" stroke-width="10"/>`,
+ng:`<circle cx="50" cy="50" r="38" fill="#fff"/><path d="M32 32l36 36M68 32L32 68" stroke="#6bb4dc" stroke-width="10" fill="none"/>`,
+stop:`<path d="M34 10h32l24 24v32L66 90H34L10 66V34z" fill="#ef6a5a"/><rect x="34" y="44" width="32" height="26" rx="10" fill="#fff"/><path d="M38 46V30M46 44V26M54 44V26M62 46V30" stroke="#fff" stroke-width="7" fill="none"/>`,
+calendar:`<rect x="12" y="20" width="76" height="68" rx="6" fill="#fff"/><path d="M12 26a6 6 0 0 1 6-6h64a6 6 0 0 1 6 6v14H12z" fill="#ef6a5a"/><path d="M32 10v18M68 10v18" stroke-width="5" fill="none"/><path d="M24 54h8M42 54h8M60 54h8M24 70h8M42 70h8" stroke-width="4" fill="none"/><circle cx="64" cy="71" r="6" fill="#ffd35c"/>`,
+together:`<circle cx="30" cy="30" r="12" fill="#ffe1a8"/><rect x="18" y="44" width="24" height="34" rx="8" fill="#6bb4dc"/><circle cx="70" cy="30" r="12" fill="#ffe1a8"/><rect x="58" y="44" width="24" height="34" rx="8" fill="#f6a6c1"/><path d="M42 58h16" stroke-width="6"/><path d="M26 78v12M34 78v12M66 78v12M74 78v12" fill="none"/>`,
+raise:`<circle cx="46" cy="40" r="13" fill="#ffe1a8"/><rect x="32" y="54" width="28" height="32" rx="9" fill="#f6a6c1"/><path d="M58 60Q74 54 72 26" fill="none" stroke="#3a2e4f" stroke-width="10"/><path d="M58 60Q74 54 72 26" fill="none" stroke="#ffe1a8" stroke-width="5"/><circle cx="72" cy="22" r="7" fill="#ffe1a8"/>`,
+swing:`<path d="M12 92L32 10H68L88 92" fill="none" stroke-width="5"/><path d="M12 10h76" stroke-width="6"/><path d="M40 12V66M60 12V66" stroke-width="3" fill="none"/><rect x="32" y="64" width="36" height="9" rx="3" fill="#ffd35c"/>`,
+slide:`<path d="M12 92V16" stroke-width="5" fill="none"/><path d="M12 16h18" stroke-width="5" fill="none"/><path d="M12 36h16M12 54h18M12 72h20" stroke-width="3" fill="none"/><path d="M30 20L90 84H72L24 36z" fill="#ef6a5a"/>`,
+monkey:`<path d="M12 92V28M88 92V28" stroke-width="6" fill="none"/><rect x="6" y="20" width="88" height="16" rx="3" fill="#ffd35c"/><path d="M22 20v16M36 20v16M50 20v16M64 20v16M78 20v16" fill="none" stroke-width="2.5"/><path d="M40 36v22M60 36v22" stroke-width="5" fill="none"/><circle cx="50" cy="70" r="12" fill="#ffe1a8"/>`,
+unicycle:`<circle cx="50" cy="66" r="24" fill="#fff"/><circle cx="50" cy="66" r="4" fill="#ffd35c"/><path d="M50 66V34" stroke-width="5" fill="none"/><rect x="34" y="26" width="32" height="9" rx="4" fill="#ef6a5a"/><path d="M26 92h48" fill="none"/>`,
+lunch:`<rect x="6" y="34" width="88" height="54" rx="6" fill="#d9a35a"/><path d="M12 46h30v8q-15 14-30 0z" fill="#fff"/><path d="M12 46h30" stroke="#ef6a5a" stroke-width="5" fill="none"/><rect x="52" y="40" width="16" height="30" fill="#fff"/><path d="M52 40l8-8 8 8" fill="#bfe6f6"/><circle cx="78" cy="62" r="11" fill="#fff"/><circle cx="78" cy="62" r="5" fill="#ff9a3d"/><path d="M40 14q-6 8 0 14M52 12q-6 8 0 14" fill="none" stroke-width="2.5"/>`,
+hirun:`<circle cx="38" cy="42" r="28" fill="#fff"/><path d="M38 42V24M38 42l13 6" stroke-width="4" fill="none"/><circle cx="72" cy="72" r="18" fill="#ef6a5a"/><path d="M60 66q10 8 6 20M82 60q-6 10 0 22" fill="none" stroke="#fff3d6" stroke-width="3"/>`,
+print:`<path d="M20 8h44l18 18v66H20z" fill="#fff"/><path d="M64 8v18h18" fill="#e6e0f0"/><path d="M30 40h40M30 52h40M30 64h26" stroke-width="3" fill="none"/><path d="M60 78l3 6 7 1-5 4 1 6-6-3-6 3 1-6-5-4 7-1z" fill="#ef6a5a" stroke-width="2"/>`,
+keyboard:`<rect x="6" y="28" width="88" height="48" rx="7" fill="#fff"/><path d="M16 40h8M30 40h8M44 40h8M58 40h8M72 40h8M20 52h8M34 52h8M48 52h8M62 52h8M76 52h6" stroke-width="5" fill="none"/><rect x="28" y="62" width="44" height="7" rx="3" fill="#ffd35c" stroke-width="2.5"/>`,
 hero:`<path d="M50 10L62 32l24 4-18 18 5 26-23-12-23 12 5-26L14 36l24-4z" fill="#ffd35c"/><path d="M52 28L40 54h10L44 76l18-28H52z" fill="#ef6a5a" stroke-width="2.5"/>`,
 };
-const ICONMAP={'涸沼':'lake','しじみ':'shijimi','広浦':'hirou','はにわ':'haniwa','夕日':'sunset','野鳥':'bird','スズガモ':'duck','オオワシ':'eagle','うなぎ':'eel','ハゼ':'goby','茨城町':'town','紅まさり':'imo','キャンプ':'tent','涸沼自然公園':'park','親沢公園':'hill','広浦公園':'boat','網掛公園':'telescope','大戸のサクラ':'sakura','ヤマトシジミ':'shijimi2','汽水湖':'brackish','涸沼川':'river','しじみ漁':'shijimiryo','ひぬまあじさいまつり':'hydrangea','はにわ窯':'kiln','太陽の広場':'sun','水戸八景':'scroll','涸沼水鳥・湿地センター':'wetland','小幡北山埴輪製作遺跡':'ruins','ヒヌマイトトンボ':'damselfly','ラムサール条約':'ramsar','広浦の秋月':'moon','天然記念物':'bigtree','茨城町東インター':'interchange','茨城県東茨城郡茨城町':'townmap','茨城町役場':'townhall','茨城町立図書館':'books','ゆうゆう館':'yuuyuu','運動公園':'baseball','ポケットファームどきどき':'carrot','水戸ホーリーホック':'soccer','ひぬまの里物産センター':'shop','里山自然体験':'forest','いばSUNホール':'hall','イオンタウン水戸南':'bags','マクドナルド':'burger','ダイソー':'basket','西松屋':'bottle','来々軒':'ramen','木村家住宅':'farmhouse','駒場庁舎':'office','前田団地':'danchi','運転免許センター':'license','いばらきまつり':'fireworks','警察学校':'police','イバライガー':'hero','飯沼栗':'kuri','ミルキークイーン':'milky','白鳥':'swan','黒鳥':'blackswan','飯沼こども園':'kodomoen','さくらこども園':'kodomoen','いばらき中央認定こども園':'kodomoen','いばらき幼稚園':'kinder','まさみ幼稚園':'kinder','長岡幼稚園':'kinder','大戸幼稚園':'kinder','ふじ保育園':'nursery','ひぬま保育園':'nursery','ウィステリアナーサリースクール':'nursery','茨城東高等学校':'highschool'};
+const ICONMAP={'涸沼':'lake','しじみ':'shijimi','広浦':'hirou','はにわ':'haniwa','夕日':'sunset','野鳥':'bird','スズガモ':'duck','オオワシ':'eagle','うなぎ':'eel','ハゼ':'goby','茨城町':'town','紅まさり':'imo','キャンプ':'tent','涸沼自然公園':'park','親沢公園':'hill','広浦公園':'boat','網掛公園':'telescope','大戸のサクラ':'sakura','ヤマトシジミ':'shijimi2','汽水湖':'brackish','涸沼川':'river','しじみ漁':'shijimiryo','ひぬまあじさいまつり':'hydrangea','はにわ窯':'kiln','太陽の広場':'sun','水戸八景':'scroll','涸沼水鳥・湿地センター':'wetland','小幡北山埴輪製作遺跡':'ruins','ヒヌマイトトンボ':'damselfly','ラムサール条約':'ramsar','広浦の秋月':'moon','天然記念物':'bigtree','茨城町東インター':'interchange','茨城県東茨城郡茨城町':'townmap','茨城町役場':'townhall','茨城町立図書館':'books','ゆうゆう館':'yuuyuu','運動公園':'baseball','ポケットファームどきどき':'carrot','水戸ホーリーホック':'soccer','ひぬまの里物産センター':'shop','里山自然体験':'forest','いばSUNホール':'hall','イオンタウン水戸南':'bags','マクドナルド':'burger','ダイソー':'basket','西松屋':'bottle','来々軒':'ramen','木村家住宅':'farmhouse','駒場庁舎':'office','前田団地':'danchi','運転免許センター':'license','いばらきまつり':'fireworks','警察学校':'police','イバライガー':'hero','飯沼栗':'kuri','ミルキークイーン':'milky','白鳥':'swan','黒鳥':'blackswan','飯沼こども園':'kodomoen','さくらこども園':'kodomoen','いばらき中央認定こども園':'kodomoen','いばらき幼稚園':'kinder','まさみ幼稚園':'kinder','長岡幼稚園':'kinder','大戸幼稚園':'kinder','ふじ保育園':'nursery','ひぬま保育園':'nursery','ウィステリアナーサリースクール':'nursery','茨城東高等学校':'highschool','合唱':'gassho','運動会':'undokai','登校':'tokou','下校':'geko','まち探検':'tanken','遠足':'ensoku','水泳':'swim','体育':'taiiku','国語':'kokugo','算数':'sansu','なわとび':'nawatobi','音楽':'ongaku','理科':'rika','社会':'shakai','生活':'seikatsu','茨城県':'kenmap','東茨城郡':'gunmap','ランドセル':'randoseru','宿泊学習':'shukuhaku','修学旅行':'shugaku','夏休み':'natsu','冬休み':'fuyu','春休み':'haru','ゴールデンウィーク':'gw','インフルエンザ':'flu','保健室':'hoken','卒業式':'sotsugyo','入学式':'nyugaku','委員会':'iinkai','クラブ活動':'club','体育館':'taiikukan','プール':'pool','教科書':'kyokasho','連絡帳':'renrakucho','国道6号':'kokudo6','オテントサマ':'cafe1','メロン':'melon','農業大学校':'sprout','消防学校':'shobo','長岡射撃場':'shageki','常磐道':'highway','納屋cafe':'naya','熊野神社':'shrine','うおふね':'uofune','うなぎや':'unagidon','大杉神社':'cedar','茨城町水道課':'suido','涸沼サイクリングロード':'cycling','北関東道':'road','セブンイレブン':'conbini','ローソン':'conbini','ファミリーマート':'conbini','セイコーマート':'conbini','長岡公園':'park','おはようございます':'sunrise','こんにちは':'hello','さようなら':'bye','ごめんね':'sorry','ごめんなさい':'sorry','ありがとう':'thanks','ありがとうございます':'thanks','お願いします':'please','いいよ':'ok','嫌です':'ng','やめて':'stop','また今度ね':'calendar','また明日':'sunrise','一緒にやらない？':'together','私はやらない':'ng','僕はいらない':'ng','私もやりたい':'raise','ブランコ':'swing','すべり台':'slide','うんてい':'monkey','一輪車':'unicycle','給食':'lunch','昼休み':'hirun','プリント':'print','タイピング':'keyboard','涸沼前川':'river'};
 const CATICON={machi:'pin',kominkan:'kominkan',school:'school'};
 function iconSVG(w){const k=ICONMAP[w.k]||CATICON[w.cat]; if(!k||!ICONS[k]) return null;
   return '<svg class="ico" viewBox="0 0 100 100" aria-hidden="true"><g filter="url(#rough)" stroke="#3a2e4f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none">'+ICONS[k]+'</g></svg>'}
@@ -880,8 +1032,8 @@ function updHud(){
 function flash(t,c){const f=$('flash');f.textContent=t;f.style.color=c||'var(--ok)';f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
 function handleChar(ch){
   if(state!=='play') return;
-  ch=ch.replace(/[\uff01-\uff5e]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0)).replace(/ー/,'-').toLowerCase();
-  if(!/^[a-z\-]$/.test(ch)) return;
+  ch=ch.replace(/[\uff01-\uff5e]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0)).replace(/ー/,'-');
+  if(!/^[a-zA-Z\-]$/.test(ch)) return;
   if(press(G.m,ch)){
     G.score+=keyPoint(G.combo,G.lv); G.combo++; G.ok++; G.maxCombo=Math.max(G.maxCombo,G.combo); SE.key(G.combo); if([10,25,50,100,150,200].includes(G.combo)) setTimeout(()=>SE.combo(),60);
     if(isDone(G.m)){
@@ -915,13 +1067,13 @@ document.addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey) return;
   // にほんご入力ON でも OFF でも、おした「キーの いち(code)」で はんていする
   let ch=null; const c=e.code||'';
-  if(/^Key[A-Z]$/.test(c)) ch=c[3].toLowerCase(); else if(c==='Minus') ch='-';
+  if(/^Key[A-Z]$/.test(c)) ch=e.shiftKey?c[3]:c[3].toLowerCase(); else if(c==='Minus') ch='-';
   else if(!e.isComposing&&e.key!=='Process'&&e.keyCode!==229&&e.key&&e.key.length===1) ch=e.key;
   if(ch){if(IS_TOUCH){IS_TOUCH=false;$('hid').blur()} e.preventDefault(); kdAt=performance.now(); handleChar(ch); $('hid').value=''}
 });
 let kdAt=0;
 // スマホなど keydown が とれない きかい用（キーがおされた直後の input は むし）
-$('hid').addEventListener('input',()=>{const h=$('hid'),v=h.value;h.value='';if(performance.now()-kdAt<150)return;for(const c of v)handleChar(c)});
+$('hid').addEventListener('input',()=>{const h=$('hid'),v=h.value;h.value='';if(performance.now()-kdAt<150)return;{const mm=G&&G.m;for(const c of v){const up=mm&&mm.u[mm.i]&&mm.u[mm.i].up;handleChar(up?c.toUpperCase():c.toLowerCase())}}});
 ['compositionstart','compositionupdate','compositionend'].forEach(t=>$('hid').addEventListener(t,()=>{if(state==='play')$('hid').value=''}));
 $('stage').addEventListener('click',()=>{if(IS_TOUCH)$('hid').focus()});
 $('quitBtn').onclick=()=>endGame(true);
@@ -958,7 +1110,7 @@ function bridgeMsg(words){
   const pool=words.length?words:WORDS.filter(w=>w.lv===G.lv);
   const w=pool[Math.random()*pool.length|0], h=toHira(w.r), nm=w.k===w.r?w.k:w.k+'（'+h+'）';
   const m={place:`つぎは、ほんものの「${nm}」に いってみよう！`,town:`「${nm}」って どんな 町かな？ ちずで さがして、あるいてみよう！`,food:`こんど「${nm}」を あじわってみよう！`,
-    creature:`ほんものの「${nm}」を さがしてみよう！`,thing:`おうちの ひとに「${nm}」の はなしを してみよう！`}[w.go];
+    say:`ほんものの 友だちや おうちの 人に 「${w.k}」と つたえてみよう！`,creature:`ほんものの「${nm}」を さがしてみよう！`,thing:`おうちの ひとに「${nm}」の はなしを してみよう！`}[w.go];
   return '<span class="bi">'+iconHTML(w)+'</span> '+m+'<br><span style="font-weight:400;font-size:14px">ゲームの つぎは、町で 探検だ。</span>';
 }
 $('againBtn').onclick=()=>{SE.select();startGame(G.lv)};
@@ -973,7 +1125,7 @@ function rollCard(){
 function cardHTML(w,badge){
   return `<div class="card r${w.rar} reveal">${badge?'<span class="badge">'+badge+'</span>':''}
     <div class="stars">${'★'.repeat(w.rar)}</div><div class="cic">${iconHTML(w)}</div>
-    <div class="cn">${esc(w.k)}</div><div class="ck">${esc(toHira(w.r))}</div><div class="cf">${fmt(w.f)}</div></div>`;
+    <div class="cn">${esc(w.k)}</div><div class="ck">${esc(toHira(w.r))}</div>${w.f?`<div class="cf">${fmt(w.f)}</div>`:''}</div>`;
 }
 function renderGacha(){ $('spinBtn').innerHTML='1かい（'+SJT+GACHA_COST+'）'; $('spin10Btn').innerHTML='10かい まとめて（'+SJT+GACHA_COST*10+'）'; $('gDesc').innerHTML='しじみ <b>'+GACHA_COST+'</b>こで 1かい。おなじ カードが でたら しじみが <b>'+DUP_BACK+'</b>こ もどってくるよ。';$('coinG').textContent=S.coins; $('spinBtn').disabled=S.coins<GACHA_COST; $('spin10Btn').disabled=S.coins<GACHA_COST*10; $('gres').innerHTML=S.coins<GACHA_COST?'<p class="center" style="color:var(--ink2)">しじみが たりないよ。タイピングで ためよう！</p>':''; $('capsule').className='capsule'}
 function pull(){const w=rollCard();const isNew=!S.cards[w.id];S.coins-=GACHA_COST;S.cards[w.id]=(S.cards[w.id]||0)+1;if(!isNew)S.coins+=DUP_BACK;return {w,isNew}}
