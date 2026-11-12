@@ -250,6 +250,19 @@ kbd{font-family:var(--mono);background:#fff;border:1px solid #cdbfab;border-bott
 .aflash{position:absolute;inset:0;background:#fff;opacity:0;animation:fl .7s ease-out}
 @keyframes fl{0%{opacity:.85}100%{opacity:0}}
 .ctile .ic .ico{width:1.5em;height:1.5em}
+
+/* ---- れんしゅう ---- */
+.pracPanel{max-width:760px;margin:0 auto;text-align:center}
+.pracLab{font-weight:700;font-size:clamp(16px,1.7vw,22px);margin:14px 0 8px}
+.pracRow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pbtn{border:3px solid #cfc3e6;background:#fff;color:var(--ink);border-radius:16px;padding:12px 6px;font:inherit;font-weight:700;font-size:clamp(16px,1.8vw,24px);cursor:pointer}
+.pbtn small{display:block;font-weight:400;font-size:.62em;color:var(--ink2);margin-top:2px}
+.pbtn.sel{border-color:#e0621a;background:#fff2e0;box-shadow:0 0 0 3px rgba(224,98,26,.25)}
+.pracNote{color:var(--ink2);margin:14px 0 12px;line-height:1.7}
+#game.practice .timebar,#game.practice .hud .sc,#game.practice .combo{display:none}
+#game.practice .tleft{min-width:0;text-align:left}
+.oyaTxt h3{margin:14px 0 4px;font-size:1.05em}
+.oyaTxt p{margin:0;line-height:1.8}
 </style>
 </head>
 <body>
@@ -278,8 +291,9 @@ kbd{font-family:var(--mono);background:#fff;border:1px solid #cdbfab;border-bott
         <button class="btn blue" data-go="gacha">🎰 ガチャ</button>
         <button class="btn blue" data-go="zukan">📖 ずかん <span id="zkT"></span></button>
         <button class="btn sub2" id="howBtn">❓ あそびかた</button>
-        <button class="btn sub2" id="certBtn">📜 しょうしょ</button>
+        <button class="btn sub2" id="certBtn">📜 証書</button>
         <a class="btn sub2" href="https://heino-naka.github.io/ibaraki-typing-map/" style="grid-column:1/-1;text-decoration:none">🗺️ いばらきタイピング探検MAP</a>
+        <button class="btn sub2 small" id="oyaBtn" style="grid-column:1/-1">👪 おうちの人・先生へ</button>
       </div>
     </div>
   </div>
@@ -291,7 +305,40 @@ kbd{font-family:var(--mono);background:#fff;border:1px solid #cdbfab;border-bott
 <section class="screen" id="coursesScr">
   <h2 class="scrTitle">コースを えらぼう</h2>
   <div class="courseRow" id="courseList"></div>
-  <div class="row" style="justify-content:center"><button class="btn sub2" data-go="title">← もどる</button></div>
+  <div class="row" style="justify-content:center"><button class="btn sub2" data-go="title">← もどる</button><button class="btn blue" data-go="practiceScr">✏️ れんしゅう</button></div>
+</section>
+
+<!-- れんしゅう えらび -->
+<section class="screen" id="practiceScr">
+  <h2 class="scrTitle">✏️ れんしゅう</h2>
+  <div class="panel pracPanel">
+    <p class="pracLab">① コースを えらぼう</p>
+    <div class="pracRow" id="pracCourse"></div>
+    <p class="pracLab">② ことばの かずを えらぼう</p>
+    <div class="pracRow" id="pracCount"></div>
+    <p class="pracNote">じかんは はかりません。てんすうも つかないよ。<br>ゆっくり せいかくに うとう！</p>
+    <button class="btn big" id="pracStart">▶ スタート</button>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn sub2" data-go="coursesScr">← もどる</button></div>
+  </div>
+</section>
+
+<!-- れんしゅう けっか -->
+<section class="screen" id="practiceRes">
+  <div class="panel pracPanel">
+    <h2 style="margin:0 0 4px">れんしゅう おわり！</h2>
+    <p id="prCourse" style="color:var(--ink2);margin:0 0 12px"></p>
+    <div class="stats">
+      <div>うった ことば<b id="prWords">0</b></div>
+      <div>せいかく さ<b id="prAcc">0%</b></div>
+      <div>かかった じかん<b id="prTime">0</b></div>
+    </div>
+    <p id="prMsg" style="font-weight:700;font-size:clamp(18px,2vw,26px);margin:12px 0 16px"></p>
+    <div class="menu">
+      <button class="btn" id="prAgain">🔁 もういちど</button>
+      <button class="btn blue" data-go="practiceScr">📋 コースを えらびなおす</button>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:10px"><button class="btn sub2" data-go="title">🏠 タイトルへ</button></div>
+  </div>
 </section>
 
 <!-- ゲーム -->
@@ -329,7 +376,7 @@ kbd{font-family:var(--mono);background:#fff;border:1px solid #cdbfab;border-bott
       <div class="bigscore" id="rScore">0</div>
       <p class="newbest" id="rBest"></p>
       <div class="titlebox">
-        <div class="lab">きょうの しょうごう</div>
+        <div class="lab">今日の 称号</div>
         <div class="ttl" id="rTitle"></div>
         <div class="nx" id="rNext"></div>
       </div>
@@ -426,7 +473,7 @@ const WORDS = [
  {k:'茨城町',r:'いばらきまち',lv:2,ic:'🏡',rar:1,go:'place',cat:'place',f:'ぼくたち・わたしたちのまち。涸沼の北がわにひろがっているよ。'},
  {k:'紅まさり',r:'べにまさり',lv:2,ic:'🍠',rar:2,go:'food',cat:'thing',f:'茨城町で育てられているさつまいもの仲間。'},
  {k:'キャンプ',r:'きゃんぷ',lv:1,ic:'⛺',rar:1,go:'thing',cat:'thing',f:'涸沼自然公園や親沢公園ではキャンプができるよ。'},
- {k:'涸沼自然公園',r:'ひぬましぜんこうえん',lv:2,ic:'🏞️',rar:2,go:'place',cat:'place',f:'山あり谷ありの散歩道がある、広い公園。高台から涸沼が見わたせるよ。'},
+ {k:'涸沼自然公園',r:'ひぬましぜんこうえん',lv:3,ic:'🏞️',rar:2,go:'place',cat:'place',f:'山あり谷ありの散歩道がある、広い公園。高台から涸沼が見わたせるよ。'},
  {k:'親沢公園',r:'おやざわこうえん',lv:2,ic:'⛰️',rar:2,go:'place',cat:'place',f:'涸沼のほとりの公園。晴れた日は、遠くに{筑波山|つくばさん}が見えるよ。'},
  {k:'広浦公園',r:'ひろうらこうえん',lv:2,ic:'🛶',rar:1,go:'place',cat:'place',f:'涸沼のほとりにある、町の人のいこいの公園。'},
  {k:'網掛公園',r:'あがけこうえん',lv:2,ic:'🔭',rar:1,go:'place',cat:'place',f:'野鳥を観察する台がある公園。朝の涸沼がきれいだよ。'},
@@ -435,7 +482,7 @@ const WORDS = [
  {k:'汽水湖',r:'きすいこ',lv:2,ic:'💧',rar:2,go:'thing',cat:'nature',f:'海の塩水と川の真水がまざった湖のこと。涸沼は、満ち{潮|しお}のとき海の水が入ってくるよ。'},
  {k:'涸沼川',r:'ひぬまがわ',lv:2,ic:'🏞',rar:1,go:'place',cat:'nature',f:'町の中を流れて、涸沼をつくっている川。'},
  {k:'しじみ漁',r:'しじみりょう',lv:2,ic:'🚣',rar:2,go:'thing',cat:'thing',f:'涸沼では、昔から続くやり方でシジミをとっているよ。'},
- {k:'ひぬまあじさいまつり',r:'ひぬまあじさいまつり',lv:2,ic:'💠',rar:2,go:'thing',cat:'thing',f:'6月から7月ごろ、涸沼自然公園で開かれるお祭り。あじさいの谷にたくさんの花がさくよ。'},
+ {k:'ひぬまあじさいまつり',r:'ひぬまあじさいまつり',lv:3,ic:'💠',rar:2,go:'thing',cat:'thing',f:'6月から7月ごろ、涸沼自然公園で開かれるお祭り。あじさいの谷にたくさんの花がさくよ。'},
  {k:'はにわ窯',r:'はにわがま',lv:2,ic:'🔥',rar:2,go:'thing',cat:'thing',f:'はにわを焼いたかま。小幡では59か所も見つかったんだ。'},
  {k:'太陽の広場',r:'たいようのひろば',lv:2,ic:'☀️',rar:1,go:'place',cat:'place',f:'涸沼自然公園の高台にある広場。涸沼を見わたせるよ。'},
  {k:'水戸八景',r:'みとはっけい',lv:2,ic:'🖼️',rar:2,go:'thing',cat:'thing',f:'水戸の{殿様|とのさま}・{徳川斉昭|とくがわなりあき}が選んだ8つの景色。茨城町の広浦も、そのひとつ。'},
@@ -490,28 +537,28 @@ const WORDS = [
  {k:'大戸小学校',r:'おおどしょうがっこう',lv:2,ic:'🏫',rar:2,go:'place',cat:'school',f:'大戸にある小学校。大戸のサクラがある地区の学校だよ。'},
  {k:'青葉小学校',r:'あおばしょうがっこう',lv:2,ic:'🏫',rar:2,go:'place',cat:'school',f:'駒場にある小学校。4つの小学校が1つになって生まれたよ。'},
  {k:'葵小学校',r:'あおいしょうがっこう',lv:2,ic:'🏫',rar:2,go:'place',cat:'school',f:'長岡にある小学校。3つの小学校が1つになって生まれたよ。'},
- {k:'明光中学校',r:'めいこうちゅうがっこう',lv:2,ic:'🏫',rar:2,go:'place',cat:'school',f:'谷田部にある中学校。茨城町の中学校は、明光中学校と青葉中学校の2つ。'},
- {k:'青葉中学校',r:'あおばちゅうがっこう',lv:2,ic:'🏫',rar:2,go:'place',cat:'school',f:'奥谷にある中学校。2つの中学校が1つになって生まれたよ。'},
+ {k:'明光中学校',r:'めいこうちゅうがっこう',lv:3,ic:'🏫',rar:2,go:'place',cat:'school',f:'谷田部にある中学校。茨城町の中学校は、明光中学校と青葉中学校の2つ。'},
+ {k:'青葉中学校',r:'あおばちゅうがっこう',lv:3,ic:'🏫',rar:2,go:'place',cat:'school',f:'奥谷にある中学校。2つの中学校が1つになって生まれたよ。'},
  {k:'茨城町役場',r:'いばらきまちやくば',lv:2,ic:'🏛️',rar:1,go:'place',cat:'place',f:'町の仕事をする役場。小堤にあるよ。'},
  {k:'茨城町立図書館',r:'いばらきちょうりつとしょかん',lv:3,ic:'📚',rar:2,go:'place',cat:'place',f:'本を借りられる図書館。小堤のゆうゆう館の中にあるよ。'},
  {k:'ゆうゆう館',r:'ゆうゆうかん',lv:2,ic:'🏢',rar:1,go:'place',cat:'place',f:'正式な名前は「茨城町{総合福祉|そうごうふくし}センターゆうゆう館」。中に茨城{町立|ちょうりつ}図書館があるよ。'},
  {k:'運動公園',r:'うんどうこうえん',lv:2,ic:'⚾',rar:1,go:'place',cat:'place',f:'野球場やテニスコート、屋内プールなどがある公園。'},
  {k:'ポケットファームどきどき',r:'ぽけっとふぁーむどきどき',lv:3,ic:'🥕',rar:2,go:'place',cat:'place',f:'自然・農業・食をテーマにした体験型の{施設|しせつ}。野菜やくだものが買えて、ソーセージ教室もあるよ。'},
- {k:'奥谷公民館',r:'おくのやこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'奥谷地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'小堤公民館',r:'おづつみこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'小堤地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'奥谷公民館',r:'おくのやこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'奥谷地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'小堤公民館',r:'おづつみこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'小堤地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'駒場公民館',r:'こまばこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'駒場地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'下土師公民館',r:'しもはじこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'下土師地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'下土師公民館',r:'しもはじこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'下土師地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'前田公民館',r:'まえだこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'前田地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'神宿公民館',r:'かみやどこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'神宿地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'神宿公民館',r:'かみやどこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'神宿地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'秋葉公民館',r:'あきばこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'秋葉地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'下飯沼公民館',r:'しもいいぬまこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'下飯沼地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'駒渡公民館',r:'こまわたりこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'駒渡地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'馬渡公民館',r:'うまわたりこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'馬渡地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'駒渡公民館',r:'こまわたりこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'駒渡地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'馬渡公民館',r:'うまわたりこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'馬渡地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'野曽公民館',r:'のそこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'野曽地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'近藤公民館',r:'こんどうこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'近藤地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'飯沼公民館',r:'いいぬまこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'飯沼地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'近藤公民館',r:'こんどうこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'近藤地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'飯沼公民館',r:'いいぬまこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'飯沼地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'常井公民館',r:'とこいこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'常井地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
- {k:'宮ケ崎公民館',r:'みやがさきこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'宮ケ崎地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
+ {k:'宮ケ崎公民館',r:'みやがさきこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'宮ケ崎地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'下座公民館',r:'げざこうみんかん',lv:2,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'下座地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'南栗崎公民館',r:'みなみくりざきこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'南栗崎地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
  {k:'中石崎公民館',r:'なかいしざきこうみんかん',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'中石崎地区にある公民館。地いきの人があつまって、学んだり、行事をしたりする場所だよ。'},
@@ -520,9 +567,9 @@ const WORDS = [
  {k:'桜の郷コミュニティーセンター',r:'さくらのさとこみゅにてぃーせんたー',lv:3,ic:'🏠',rar:1,go:'place',cat:'kominkan',f:'桜の郷地区にある、地いきの人があつまるコミュニティーセンター。学んだり、行事をしたりする場所だよ。'},
  {k:'水戸ホーリーホック',r:'みとほーりーほっく',lv:2,ic:'⚽',rar:2,go:'place',cat:'thing',f:'茨城町もホームタウンにしている、プロサッカーチーム。「ホーリーホック」は英語で「{葵|あおい}」のこと。{水戸藩|みとはん}の{家紋|かもん}にちなんだ名前だよ。'},
  {k:'ひぬまの里物産センター',r:'ひぬまのさとぶっさんせんたー',lv:3,ic:'🏪',rar:2,go:'place',cat:'shop',f:'若宮にある直売所。涸沼のしじみや魚、つけもの、地元の野菜などが買えるよ。くぬぎ林もあるよ。'},
- {k:'里山自然体験',r:'さとやましぜんたいけん',lv:2,ic:'🌲',rar:2,go:'place',cat:'thing',f:'若宮体験学習の森で行われる、町の「親子で里山自然体験教室」。さつまいもほりや、木と竹の工作、たき火を体験するよ。'},
+ {k:'里山自然体験',r:'さとやましぜんたいけん',lv:3,ic:'🌲',rar:2,go:'place',cat:'thing',f:'若宮体験学習の森で行われる、町の「親子で里山自然体験教室」。さつまいもほりや、木と竹の工作、たき火を体験するよ。'},
  {k:'いばSUNホール',r:'いばSUNほーる',lv:2,ic:'🎭',rar:2,go:'place',cat:'place',f:'茨城町文化交流会館の{愛称|あいしょう}。小堤の役場のとなりにあるよ。最大500席の大きなホールや、カフェ、音楽スタジオ、キッズルームがあるよ。'},
- {k:'イオンタウン水戸南',r:'いおんたうんみとみなみ',lv:2,ic:'🛍️',rar:2,go:'place',cat:'shop',f:'長岡にある大きなショッピングセンター。名前は「水戸南」だけど、住所は茨城町だよ。西松屋やマクドナルド、ダイソーなどが入っているよ。'},
+ {k:'イオンタウン水戸南',r:'いおんたうんみとみなみ',lv:3,ic:'🛍️',rar:2,go:'place',cat:'shop',f:'長岡にある大きなショッピングセンター。名前は「水戸南」だけど、住所は茨城町だよ。西松屋やマクドナルド、ダイソーなどが入っているよ。'},
  {k:'マクドナルド',r:'まくどなるど',lv:2,ic:'🍔',rar:1,go:'place',cat:'shop',f:'ハンバーガーのお店。茨城町では、イオンタウン水戸南の中にあるよ。'},
  {k:'ダイソー',r:'だいそー',lv:2,ic:'🧺',rar:1,go:'place',cat:'shop',f:'日用品や文ぼう具などが買える、100円ショップ。茨城町では、イオンタウン水戸南の中にあるよ。'},
  {k:'西松屋',r:'にしまつや',lv:2,ic:'🍼',rar:1,go:'place',cat:'shop',f:'ベビー用品やこども用品が買えるお店。イオンタウン水戸南の中にあるよ。'},
@@ -618,7 +665,7 @@ const WORDS = [
  {k:'やめて',r:'やめて',lv:1,ic:'✋',rar:1,go:'say',cat:'life',f:'',card:false},
  {k:'また今度ね',r:'またこんどね',lv:2,ic:'📅',rar:1,go:'say',cat:'life',f:'',card:false},
  {k:'また明日',r:'またあした',lv:1,ic:'🌅',rar:1,go:'say',cat:'life',f:'',card:false},
- {k:'一緒にやらない？',r:'いっしょにやらない？',lv:2,ic:'👫',rar:1,go:'say',cat:'life',f:'',card:false},
+ {k:'一緒にやらない？',r:'いっしょにやらない？',lv:3,ic:'👫',rar:1,go:'say',cat:'life',f:'',card:false},
  {k:'私はやらない',r:'わたしはやらない',lv:2,ic:'❌',rar:1,go:'say',cat:'life',f:'',card:false},
  {k:'僕はいらない',r:'ぼくはいらない',lv:2,ic:'❌',rar:1,go:'say',cat:'life',f:'',card:false},
  {k:'私もやりたい',r:'わたしもやりたい',lv:2,ic:'🙋',rar:1,go:'say',cat:'life',f:'',card:false},
@@ -630,6 +677,90 @@ const WORDS = [
  {k:'昼休み',r:'ひるやすみ',lv:1,ic:'⏰',rar:1,go:'thing',cat:'life',f:'',card:false},
  {k:'プリント',r:'ぷりんと',lv:1,ic:'📄',rar:1,go:'thing',cat:'life',f:'',card:false},
  {k:'タイピング',r:'たいぴんぐ',lv:1,ic:'⌨️',rar:1,go:'thing',cat:'life',f:'',card:false},
+ {k:'マガモ',r:'まがも',lv:1,ic:'🦆',rar:1,go:'creature',cat:'nature',f:'冬の涸沼で、たくさん冬をこすカモ。スズガモといっしょに見られるよ。'},
+ {k:'コガモ',r:'こがも',lv:1,ic:'🦆',rar:1,go:'creature',cat:'nature',f:'体の大きさが34〜38センチの、小さめのカモ。涸沼にすむ野鳥のひとつだよ。'},
+ {k:'カルガモ',r:'かるがも',lv:1,ic:'🦆',rar:1,go:'creature',cat:'nature',f:'涸沼にやってくるカモのなかま。水の上をすいすい泳ぐよ。'},
+ {k:'ヒドリガモ',r:'ひどりがも',lv:1,ic:'🦆',rar:1,go:'creature',cat:'nature',f:'冬の涸沼で見られるカモ。'},
+ {k:'オカヨシガモ',r:'おかよしがも',lv:2,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'冬の涸沼で見られるカモ。'},
+ {k:'ハシビロガモ',r:'はしびろがも',lv:2,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'涸沼にやってくるカモのなかま。'},
+ {k:'オナガガモ',r:'おなががも',lv:1,ic:'🦆',rar:1,go:'creature',cat:'nature',f:'涸沼にやってくるカモのなかま。'},
+ {k:'ホシハジロ',r:'ほしはじろ',lv:1,ic:'🦆',rar:1,go:'creature',cat:'nature',f:'涸沼にやってくるカモのなかま。'},
+ {k:'キンクロハジロ',r:'きんくろはじろ',lv:2,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'体の大きさが40〜47センチのカモ。冬の涸沼で見られるよ。'},
+ {k:'ホオジロガモ',r:'ほおじろがも',lv:2,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'冬の涸沼で見られるカモ。'},
+ {k:'ミコアイサ',r:'みこあいさ',lv:1,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'冬の涸沼で見られるカモのなかま。'},
+ {k:'カワアイサ',r:'かわあいさ',lv:1,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'体の大きさが58〜72センチもある、大きなカモ。'},
+ {k:'トモエガモ',r:'ともえがも',lv:1,ic:'🦆',rar:2,go:'creature',cat:'nature',f:'涸沼にすむ野鳥のひとつ。体の大きさは39〜43センチだよ。'},
+ {k:'カイツブリ',r:'かいつぶり',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'体の大きさが25〜29センチの、小さな水鳥。水にもぐるのがとくいだよ。'},
+ {k:'カンムリカイツブリ',r:'かんむりかいつぶり',lv:2,ic:'📍',rar:2,go:'creature',cat:'nature',f:'冬の涸沼の水面で見られる水鳥。'},
+ {k:'ハジロカイツブリ',r:'はじろかいつぶり',lv:2,ic:'📍',rar:2,go:'creature',cat:'nature',f:'冬の涸沼で見られる水鳥。体の大きさは28〜34センチだよ。'},
+ {k:'アカエリカイツブリ',r:'あかえりかいつぶり',lv:2,ic:'📍',rar:2,go:'creature',cat:'nature',f:'涸沼にやってくるカイツブリのなかま。'},
+ {k:'カワウ',r:'かわう',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'涸沼にすむ、黒っぽい水鳥。'},
+ {k:'コハクチョウ',r:'こはくちょう',lv:2,ic:'🦢',rar:2,go:'creature',cat:'nature',f:'冬に、涸沼のまわりの田んぼなどで見られる、白くて大きな鳥。'},
+ {k:'ミサゴ',r:'みさご',lv:1,ic:'🦅',rar:2,go:'creature',cat:'nature',f:'1年じゅう涸沼で見られる、魚をとるタカのなかま。'},
+ {k:'チュウヒ',r:'ちゅうひ',lv:1,ic:'🦅',rar:2,go:'creature',cat:'nature',f:'冬に、涸沼のヨシ原でねむる、タカのなかま。'},
+ {k:'オオタカ',r:'おおたか',lv:1,ic:'🦅',rar:2,go:'creature',cat:'nature',f:'涸沼のまわりで、すんでいることが確認されているタカ。'},
+ {k:'カワセミ',r:'かわせみ',lv:1,ic:'📍',rar:2,go:'creature',cat:'nature',f:'体が17センチの小さな鳥。1年じゅう涸沼で見られるよ。'},
+ {k:'ヨシゴイ',r:'よしごい',lv:1,ic:'📍',rar:2,go:'creature',cat:'nature',f:'夏の涸沼で、ヨシ原にすむ鳥。'},
+ {k:'オオヨシキリ',r:'おおよしきり',lv:2,ic:'📍',rar:2,go:'creature',cat:'nature',f:'涸沼のヨシ原で、子そだてをする鳥。'},
+ {k:'オオセッカ',r:'おおせっか',lv:1,ic:'📍',rar:3,go:'creature',cat:'nature',f:'春から夏に涸沼で見られる、数の少ない小さな鳥。ヨシ原の{昆虫|こんちゅう}を食べるよ。'},
+ {k:'アマサギ',r:'あまさぎ',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'体の大きさが46〜56センチのサギ。夏の涸沼で見られるよ。'},
+ {k:'チュウサギ',r:'ちゅうさぎ',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'体の大きさが65〜72センチのサギ。夏の涸沼で見られるよ。'},
+ {k:'ユリカモメ',r:'ゆりかもめ',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'冬の涸沼で見られるカモメ。'},
+ {k:'タゲリ',r:'たげり',lv:1,ic:'📍',rar:2,go:'creature',cat:'nature',f:'冬に、涸沼のまわりの田んぼで見られる鳥。'},
+ {k:'ツバメ',r:'つばめ',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'夏の涸沼では、ヨシ原でねむるツバメの群れが見られるよ。'},
+ {k:'ヨシ',r:'よし',lv:1,ic:'🌾',rar:1,go:'creature',cat:'nature',f:'水べに生える、せの高い草。ヒヌマイトトンボのすみかになるよ。'},
+ {k:'マコモ',r:'まこも',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'涸沼自然公園の{湿地|しっち}で見られる、水べの植物。'},
+ {k:'ガマ',r:'がま',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'涸沼自然公園の{湿地|しっち}で見られる、水べの植物。'},
+ {k:'ヒメガマ',r:'ひめがま',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'ガマよりほそい葉をもつ、水べの植物。涸沼自然公園で観察されたよ。'},
+ {k:'タコノアシ',r:'たこのあし',lv:1,ic:'📍',rar:3,go:'creature',cat:'nature',f:'今はあまり見られなくなった、めずらしい水べの植物。涸沼に残っているよ。'},
+ {k:'オオクグ',r:'おおくぐ',lv:1,ic:'📍',rar:3,go:'creature',cat:'nature',f:'今はあまり見られなくなった、めずらしい水べの植物。涸沼に残っているよ。'},
+ {k:'ミズアオイ',r:'みずあおい',lv:1,ic:'📍',rar:3,go:'creature',cat:'nature',f:'今はあまり見られなくなった、めずらしい水べの植物。涸沼に残っているよ。'},
+ {k:'あじさいの谷',r:'あじさいのたに',lv:2,ic:'💠',rar:2,go:'place',cat:'place',f:'涸沼自然公園にある、あじさいがさく谷。上から下まで、あじさいの大パノラマが楽しめるよ。'},
+ {k:'カシワバアジサイ',r:'かしわばあじさい',lv:2,ic:'💠',rar:2,go:'creature',cat:'nature',f:'涸沼自然公園で見られるアジサイのなかま。'},
+ {k:'ホタルブクロ',r:'ほたるぶくろ',lv:2,ic:'📍',rar:2,go:'creature',cat:'nature',f:'涸沼自然公園で、観察会で見つかった花。'},
+ {k:'ワカサギ',r:'わかさぎ',lv:1,ic:'🐟',rar:1,go:'creature',cat:'nature',f:'涸沼でとれる魚のひとつ。ヤマトシジミやマハゼといっしょに、涸沼の漁をささえているよ。'},
+ {k:'メダカ',r:'めだか',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'涸沼自然公園を流れる若宮川で見つかった小さな魚。'},
+ {k:'ドジョウ',r:'どじょう',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'若宮川で見つかった、ひげのある細長い魚。'},
+ {k:'モクズガニ',r:'もくずがに',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'若宮川で見つかったカニ。'},
+ {k:'ヌマエビ',r:'ぬまえび',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'若宮川で見つかった小さなエビ。'},
+ {k:'クロダイ',r:'くろだい',lv:1,ic:'📍',rar:1,go:'creature',cat:'nature',f:'涸沼のつりで、マハゼなどといっしょにつれた魚。'},
+ {k:'たかっぽ漁',r:'たかっぽりょう',lv:2,ic:'📍',rar:3,go:'thing',cat:'nature',f:'{針|はり}も{網|あみ}もエサも使わず、竹の{筒|つつ}を使う、涸沼につたわる昔ながらの漁。'},
+ {k:'笹浸し漁',r:'ささびたしりょう',lv:2,ic:'📍',rar:3,go:'thing',cat:'nature',f:'{針|はり}も{網|あみ}もエサも使わず、笹を使う、涸沼につたわる昔ながらの漁。'},
+ {k:'涸沼竿',r:'ひぬまざお',lv:1,ic:'📍',rar:3,go:'thing',cat:'nature',f:'{江戸|えど}時代からあったとされる、涸沼につたわるつり竿。'},
+ {k:'海跡湖',r:'かいせきこ',lv:1,ic:'🌊',rar:2,go:'thing',cat:'nature',f:'昔は海の{入り江|いりえ}だったところが、土や{砂|すな}でふさがれてできた湖。涸沼もそうだよ。'},
+ {k:'鳥獣保護区',r:'ちょうじゅうほごく',lv:2,ic:'📍',rar:2,go:'place',cat:'nature',f:'鳥やけものを守るために決められた場所。涸沼は国の保護区になっているよ。'},
+ {k:'渡り鳥',r:'わたりどり',lv:1,ic:'🐦',rar:1,go:'thing',cat:'nature',f:'きせつによって、すむ場所を変える鳥。冬の涸沼にも、たくさんやってくるよ。'},
+ {k:'冬鳥',r:'ふゆどり',lv:1,ic:'🐦',rar:1,go:'thing',cat:'nature',f:'冬に、さむい国から日本にわたってくる鳥。スズガモも冬鳥だよ。'},
+ {k:'夏鳥',r:'なつどり',lv:1,ic:'🐦',rar:1,go:'thing',cat:'nature',f:'夏に日本にやってきて、子そだてをする鳥。'},
+ {k:'ミニ水族館',r:'みにすいぞくかん',lv:2,ic:'📍',rar:2,go:'place',cat:'place',f:'涸沼水鳥・{湿地|しっち}センターにある、涸沼の水の生き物を見られるところ。'},
+ {k:'見晴らしデッキ',r:'みはらしでっき',lv:2,ic:'🔭',rar:2,go:'place',cat:'place',f:'涸沼水鳥・{湿地|しっち}センターから、涸沼が見わたせるデッキ。'},
+ {k:'ライブラリー',r:'らいぶらりー',lv:2,ic:'📚',rar:1,go:'place',cat:'place',f:'涸沼水鳥・{湿地|しっち}センターにある、本をよめるところ。'},
+ {k:'レクチャールーム',r:'れくちゃーるーむ',lv:2,ic:'🏛️',rar:2,go:'place',cat:'place',f:'涸沼水鳥・{湿地|しっち}センターにある、学習につかえる部屋。'},
+ {k:'若宮川',r:'わかみやがわ',lv:2,ic:'🏞️',rar:2,go:'place',cat:'place',f:'涸沼自然公園の中を流れる川。魚やカニなどが見つかるよ。'},
+ {k:'涸沼自然公園キャンプ場',r:'ひぬましぜんこうえんきゃんぷじょう',lv:3,ic:'⛺',rar:2,go:'place',cat:'place',f:'涸沼自然公園の中にあるキャンプ場。テントを自由にはれる広場と、立ち木で区切られたサイトがあるよ。'},
+ {k:'国指定涸沼鳥獣保護区',r:'くにしていひぬまちょうじゅうほごく',lv:3,ic:'📍',rar:3,go:'place',cat:'nature',f:'鳥やけものを守るために、国が2014年に決めた場所。涸沼の水鳥たちを守っているよ。'},
+ {k:'大涸沼漁業協同組合',r:'おおひぬまぎょぎょうきょうどうくみあい',lv:3,ic:'🐚',rar:2,go:'thing',cat:'nature',f:'涸沼でしじみなどをとる漁師さんたちの組合。しじみを増やす取り組みもしているよ。'},
+ {k:'しじみかき',r:'しじみかき',lv:1,ic:'🐚',rar:2,go:'thing',cat:'nature',f:'動力を使わず、長い{柄|え}の道具で川底のしじみをかきおこしてとる、涸沼のしじみ漁。'},
+ {k:'総合福祉センターゆうゆう館',r:'そうごうふくしせんたーゆうゆうかん',lv:3,ic:'🏥',rar:1,go:'place',cat:'place',f:'茨城町立図書館や保健センターが入っている、町の{施設|しせつ}。'},
+ {k:'網掛コミュニティセンター',r:'あがけこみゅにてぃせんたー',lv:3,ic:'🏛️',rar:1,go:'place',cat:'kominkan',f:'網掛にある、町の人が集まれる{施設|しせつ}。'},
+ {k:'茨城県工業技術センター',r:'いばらきけんこうぎょうぎじゅつせんたー',lv:3,ic:'📍',rar:1,go:'place',cat:'place',f:'長岡にある、ものづくりを助ける県の{施設|しせつ}。'},
+ {k:'学校給食共同調理場',r:'がっこうきゅうしょくきょうどうちょうりじょう',lv:3,ic:'🍱',rar:1,go:'place',cat:'place',f:'町の学校の給食を、まとめてつくっているところ。下飯沼にあるよ。'},
+ {k:'ブックスタート事業',r:'ぶっくすたーとじぎょう',lv:3,ic:'📚',rar:2,go:'thing',cat:'place',f:'赤ちゃんのころから、本に親しめるようにすすめている、茨城町の取り組み。'},
+ {k:'ひぬまの恵み愛ちゃんメロン',r:'ひぬまのめぐみあいちゃんめろん',lv:3,ic:'🍈',rar:3,go:'food',cat:'food',f:'JA水戸茨城町メロン部会のこだわり研究部がつくる、特別{栽培|さいばい}のメロン。'},
+ {k:'イバラキング',r:'いばらきんぐ',lv:2,ic:'🍈',rar:2,go:'food',cat:'food',f:'茨城県で生まれたメロンの品種。茨城町でもつくられているよ。'},
+ {k:'レノン',r:'れのん',lv:1,ic:'🍈',rar:1,go:'food',cat:'food',f:'茨城町でとくにたくさんつくられている、赤い果肉のメロンの品種。'},
+ {k:'アンデスメロン',r:'あんですめろん',lv:2,ic:'🍈',rar:1,go:'food',cat:'food',f:'茨城町でつくられているメロンの品種のひとつ。'},
+ {k:'オトメ',r:'おとめ',lv:1,ic:'🍈',rar:1,go:'food',cat:'food',f:'茨城町でつくられているメロンの品種のひとつ。'},
+ {k:'春メロン',r:'はるめろん',lv:1,ic:'🍈',rar:2,go:'food',cat:'food',f:'茨城町は、県の中でもいちばん早く春メロンを出荷する産地なんだ。'},
+ {k:'たがね餅',r:'たがねもち',lv:1,ic:'📍',rar:2,go:'food',cat:'food',f:'茨城町でとれたお米を使った、おもち。'},
+ {k:'ニラ',r:'にら',lv:1,ic:'📍',rar:1,go:'food',cat:'food',f:'茨城町でつくられている野菜のひとつ。'},
+ {k:'スズキ',r:'すずき',lv:1,ic:'🐟',rar:1,go:'creature',cat:'nature',f:'汽水湖の涸沼にすんでいる魚のひとつ。'},
+ {k:'カベット山',r:'かべっとやま',lv:2,ic:'🏺',rar:2,go:'place',cat:'place',f:'{小幡|おばた}の{埴輪|はにわ}づくりの{遺跡|いせき}の 近くは、カベット山と よばれているよ。むかしから 良い{粘土|ねんど}が とれる ところなんだ。'},
+ {k:'いととんぼ',r:'いととんぼ',lv:1,ic:'🏪',rar:1,go:'place',cat:'place',f:'涸沼自然公園の中にある売店。'},
+ {k:'長岡村',r:'ながおかむら',lv:2,ic:'🗺️',rar:1,go:'town',cat:'place',f:'{昭和|しょうわ}30年に{合併|がっぺい}して茨城町になった村のひとつ。'},
+ {k:'上野合村',r:'かみのあいむら',lv:2,ic:'🗺️',rar:1,go:'town',cat:'place',f:'{昭和|しょうわ}30年に{合併|がっぺい}して茨城町になった村のひとつ。'},
+ {k:'川根村',r:'かわねむら',lv:1,ic:'🗺️',rar:1,go:'town',cat:'place',f:'{昭和|しょうわ}30年に{合併|がっぺい}して茨城町になった村のひとつ。'},
+ {k:'沼前村',r:'ぬまさきむら',lv:2,ic:'🗺️',rar:1,go:'town',cat:'place',f:'{昭和|しょうわ}30年に{合併|がっぺい}して茨城町になった村のひとつ。'},
 ];
 WORDS.forEach((w,i)=>w.id=i); // ※ idは もとの じゅんばんを まもる（ほぞんデータと むすびつくため）
 const CARDS=WORDS.filter(w=>w.card!==false); // ガチャで でる カード（タイピングだけの ことばも ある）
@@ -867,8 +998,37 @@ hirun:`<circle cx="38" cy="42" r="28" fill="#fff"/><path d="M38 42V24M38 42l13 6
 print:`<path d="M20 8h44l18 18v66H20z" fill="#fff"/><path d="M64 8v18h18" fill="#e6e0f0"/><path d="M30 40h40M30 52h40M30 64h26" stroke-width="3" fill="none"/><path d="M60 78l3 6 7 1-5 4 1 6-6-3-6 3 1-6-5-4 7-1z" fill="#ef6a5a" stroke-width="2"/>`,
 keyboard:`<rect x="6" y="28" width="88" height="48" rx="7" fill="#fff"/><path d="M16 40h8M30 40h8M44 40h8M58 40h8M72 40h8M20 52h8M34 52h8M48 52h8M62 52h8M76 52h6" stroke-width="5" fill="none"/><rect x="28" y="62" width="44" height="7" rx="3" fill="#ffd35c" stroke-width="2.5"/>`,
 hero:`<path d="M50 10L62 32l24 4-18 18 5 26-23-12-23 12 5-26L14 36l24-4z" fill="#ffd35c"/><path d="M52 28L40 54h10L44 76l18-28H52z" fill="#ef6a5a" stroke-width="2.5"/>`,
+grebe:`<path d="M14 62Q18 84 50 84Q82 84 84 60Q60 68 40 58Q26 48 14 62z" fill="#a98f78"/><circle cx="66" cy="42" r="13" fill="#4a3f3a"/><path d="M76 40l14 4-14 4z" fill="#d9c9a8"/><circle cx="68" cy="39" r="2.5" fill="#fff"/><path d="M8 90q8-5 16 0t16 0t16 0t16 0t16 0" fill="none" stroke="#6bb4dc" stroke-width="3.5"/>`,
+grebecrest:`<path d="M14 62Q18 84 50 84Q82 84 84 60Q60 68 40 58Q26 48 14 62z" fill="#f4f0e8"/><path d="M60 22l8 8-12 2zM68 20l4 10-10 0z" fill="#3a2e4f"/><circle cx="66" cy="42" r="13" fill="#f4f0e8"/><path d="M54 36Q62 22 78 34" fill="#d9742c"/><path d="M76 42l16 3-16 4z" fill="#e8a0a0"/><circle cx="68" cy="40" r="2.5" fill="#3a2e4f"/><path d="M8 90q8-5 16 0t16 0t16 0t16 0t16 0" fill="none" stroke="#6bb4dc" stroke-width="3.5"/>`,
+cormorant:`<path d="M30 84Q20 50 40 36Q52 28 56 14" fill="none" stroke-width="9" stroke="#2b2b3f"/><path d="M56 14l-4 4 14 6z" fill="#2b2b3f"/><path d="M60 20l18-4-14 12z" fill="#e8c860"/><circle cx="58" cy="17" r="2" fill="#fff"/><path d="M30 84h26" fill="none"/><path d="M26 56Q40 44 52 60Q50 80 30 82z" fill="#3a3a52"/>`,
+kingfisher:`<path d="M22 66Q22 40 48 38Q70 40 68 60Q60 76 36 74z" fill="#2fa7c4"/><path d="M40 60Q54 62 66 52Q64 70 44 72z" fill="#f2a25c"/><circle cx="50" cy="28" r="14" fill="#2fa7c4"/><path d="M62 26l26 4-26 6z" fill="#3a2e4f"/><circle cx="54" cy="26" r="2.5" fill="#fff"/><path d="M12 84h60" fill="none" stroke="#9c6a43"/>`,
+bittern:`<path d="M30 84Q26 50 46 40Q62 36 62 20" fill="none" stroke-width="12" stroke="#d9b27a"/><path d="M60 14l-4 8 24 4z" fill="#8c6a43"/><circle cx="58" cy="17" r="2.5" fill="#3a2e4f"/><path d="M44 52v14M52 50v14" stroke="#9c6a43" stroke-width="3"/><path d="M16 90V66M26 90V60M70 90V68M80 90V58" stroke="#6aa65b" stroke-width="3"/>`,
+reedbird:`<path d="M26 64Q22 44 42 38Q64 36 70 54Q62 72 40 72z" fill="#c9a77a"/><circle cx="60" cy="38" r="11" fill="#c9a77a"/><path d="M69 38l14 3-14 3z" fill="#7a5a3a"/><circle cx="62" cy="36" r="2.2" fill="#3a2e4f"/><path d="M30 66l-18 10" stroke="#9c6a43" stroke-width="3"/><path d="M40 72v14M52 72v14" stroke="#9c6a43" stroke-width="3"/><path d="M82 90V40" stroke="#6aa65b" stroke-width="4"/>`,
+egret:`<path d="M24 78Q16 52 38 44Q50 40 54 26" fill="none" stroke-width="16" stroke="#f1ece0"/><path d="M24 78Q16 52 38 44Q50 40 54 26" fill="none" stroke-width="3"/><path d="M24 70Q40 60 30 82" fill="#f1ece0"/><circle cx="58" cy="20" r="9" fill="#f1ece0"/><path d="M65 19l20 4-20 5z" fill="#ffc24a"/><circle cx="60" cy="18" r="2.2" fill="#3a2e4f"/><path d="M34 80v10M42 80v10" stroke-width="3"/><path d="M8 92h84" stroke="#6bb4dc"/>`,
+gull:`<path d="M10 60Q30 28 50 52Q70 28 90 60Q70 50 50 66Q30 50 10 60z" fill="#f4f0e8"/><circle cx="50" cy="52" r="8" fill="#f4f0e8"/><path d="M56 52l12 2-12 4z" fill="#e0523a"/><circle cx="52" cy="50" r="2" fill="#3a2e4f"/>`,
+lapwing:`<path d="M24 70Q20 44 44 40Q66 40 70 60Q62 78 40 78z" fill="#4a7a6a"/><path d="M44 24l-8-12 12 4 4-8 2 10" fill="#3a2e4f"/><circle cx="52" cy="34" r="11" fill="#f4f0e8"/><path d="M61 34l14 4-14 3z" fill="#3a2e4f"/><circle cx="55" cy="32" r="2.2" fill="#3a2e4f"/><path d="M40 78v12M52 78v12" stroke="#c86a5a" stroke-width="3"/>`,
+swallow:`<path d="M10 40Q36 36 52 54Q70 40 92 30Q80 56 58 62L64 86L50 66Q34 66 22 54z" fill="#2b3a6a"/><path d="M48 54Q54 64 62 60" fill="#f4f0e8"/><circle cx="34" cy="48" r="2" fill="#fff"/><path d="M26 52l-12 4 14 2z" fill="#e0523a"/>`,
+makomo:`<path d="M30 90Q28 40 18 14M50 90Q50 40 50 10M70 90Q72 40 82 16" fill="none" stroke="#6aa65b" stroke-width="5"/><path d="M50 10Q40 8 38 20M50 10Q60 8 62 20" fill="none" stroke="#6aa65b"/><path d="M8 90h84" stroke="#6bb4dc"/>`,
+gama:`<path d="M30 90Q30 50 24 20M70 90Q70 50 76 20" fill="none" stroke="#6aa65b" stroke-width="5"/><rect x="42" y="22" width="14" height="40" rx="7" fill="#9c6a43"/><path d="M49 22V8" stroke="#6aa65b" stroke-width="4"/><path d="M49 62V90" stroke="#6aa65b" stroke-width="4"/><path d="M8 90h84" stroke="#6bb4dc"/>`,
+tako:`<path d="M50 90V40" stroke="#6aa65b" stroke-width="5"/><path d="M50 44Q30 30 20 44M50 44Q40 24 36 12M50 44Q56 22 66 12M50 44Q70 30 80 44" fill="none" stroke="#c86a5a" stroke-width="5"/><circle cx="20" cy="44" r="3" fill="#c86a5a"/><circle cx="36" cy="12" r="3" fill="#c86a5a"/><circle cx="66" cy="12" r="3" fill="#c86a5a"/><circle cx="80" cy="44" r="3" fill="#c86a5a"/>`,
+kugu:`<path d="M24 90Q22 50 12 26M42 90Q42 44 40 14M60 90Q62 46 70 18M76 90Q78 54 90 34" fill="none" stroke="#7ab36a" stroke-width="4"/><path d="M8 90h84" stroke="#6bb4dc"/><path d="M40 14l-4 8M70 18l4 8" stroke="#7ab36a"/>`,
+mizuaoi:`<path d="M50 90V50" stroke="#6aa65b" stroke-width="5"/><path d="M50 62Q26 62 22 78Q40 80 50 68zM50 62Q74 62 78 78Q60 80 50 68z" fill="#8cc67a"/><path d="M50 50Q36 40 40 24Q50 18 56 28Q62 42 50 50z" fill="#8a7ad9"/><path d="M50 50Q66 44 70 30Q62 22 54 30z" fill="#a898ec"/><circle cx="50" cy="38" r="3" fill="#f2c94c"/>`,
+hotaru:`<path d="M50 90V30" stroke="#6aa65b" stroke-width="4"/><path d="M50 30Q50 14 40 16Q30 36 34 52Q48 56 58 48Q64 30 56 18Q50 14 50 30z" fill="#f2c6e0"/><path d="M40 42h14M42 34h10" stroke="#c86a9a" stroke-width="2"/><path d="M50 74Q30 74 24 84Q42 86 50 78z" fill="#8cc67a"/>`,
+medaka:`<path d="M12 50Q30 32 60 44L84 32V68L60 56Q30 68 12 50z" fill="#e9d9a8"/><circle cx="26" cy="46" r="4" fill="#3a2e4f"/><path d="M44 52q4 4 8 0" fill="none" stroke="#9c6a43" stroke-width="2.5"/>`,
+dojo:`<path d="M10 56Q26 40 40 56T70 56T90 48" fill="none" stroke="#8c7a5a" stroke-width="12"/><path d="M10 56Q26 40 40 56T70 56T90 48" fill="none" stroke="#c9b58a" stroke-width="7"/><circle cx="16" cy="52" r="2.5" fill="#3a2e4f"/><path d="M8 70l10 6M10 80l8 2" stroke="#9c6a43"/>`,
+crab:`<path d="M24 62Q24 38 50 38Q76 38 76 62Q76 78 50 78Q24 78 24 62z" fill="#a87a5a"/><path d="M26 44Q10 34 14 22Q26 20 30 36M74 44Q90 34 86 22Q74 20 70 36" fill="#c98a5a"/><circle cx="42" cy="34" r="3" fill="#fff"/><circle cx="58" cy="34" r="3" fill="#fff"/><path d="M26 66l-12 8M30 74l-8 10M74 66l12 8M70 74l8 10" fill="none"/>`,
+shrimp:`<path d="M72 28Q86 40 74 58Q60 80 36 74Q22 70 22 58Q36 66 50 62Q66 54 62 40Q58 30 72 28z" fill="#e9c4a8"/><path d="M72 28l10-12M70 30l16-4" fill="none"/><circle cx="68" cy="34" r="2.5" fill="#3a2e4f"/><path d="M22 58l-10 10 8 2z" fill="#e9c4a8"/>`,
+kurodai:`<path d="M10 54Q28 24 64 40L88 26V76L64 62Q28 82 10 54z" fill="#6a7a8a"/><path d="M34 40Q46 32 58 38" fill="none"/><circle cx="24" cy="50" r="3.5" fill="#fff"/><circle cx="24" cy="50" r="1.5" fill="#3a2e4f"/><path d="M40 52q4 4 8 0M52 56q4 4 8 0" fill="none" stroke="#3a2e4f" stroke-width="2"/>`,
+takappo:`<rect x="14" y="40" width="72" height="22" rx="4" fill="#d9b27a" transform="rotate(-12 50 50)"/><circle cx="82" cy="34" r="10" fill="#8c6a43" transform="rotate(-12 50 50)"/><path d="M30 38v26M52 34v26" stroke="#9c6a43" transform="rotate(-12 50 50)"/><path d="M8 84q8-5 16 0t16 0t16 0t16 0t16 0" fill="none" stroke="#6bb4dc" stroke-width="3.5"/>`,
+sasa:`<path d="M20 86Q30 40 50 12" fill="none" stroke="#6aa65b" stroke-width="5"/><path d="M34 62Q18 52 14 38Q34 38 38 56zM38 48Q50 34 64 36Q58 52 42 56zM44 34Q36 22 40 8Q54 14 52 30z" fill="#8cc67a"/><path d="M8 90h84" stroke="#6bb4dc"/>`,
+sao:`<path d="M10 80L86 14" fill="none" stroke="#9c6a43" stroke-width="5"/><path d="M86 14Q96 30 90 52" fill="none" stroke="#3a2e4f" stroke-width="2.5"/><path d="M90 52l-6 4M90 52l6 4" fill="none"/><circle cx="90" cy="60" r="4" fill="#fff2e0"/><path d="M8 90q8-5 16 0t16 0t16 0t16 0t16 0" fill="none" stroke="#6bb4dc" stroke-width="3.5"/>`,
+protect:`<path d="M50 10L18 22V50Q18 74 50 90Q82 74 82 50V22z" fill="#cfe8c8"/><path d="M34 56Q36 40 52 40Q68 44 66 56Q58 66 42 64z" fill="#f4f0e8"/><circle cx="56" cy="36" r="8" fill="#f4f0e8"/><path d="M63 36l8 2-8 3z" fill="#ffb347"/><circle cx="58" cy="34" r="1.8" fill="#3a2e4f"/>`,
+aquarium:`<rect x="12" y="24" width="76" height="56" rx="8" fill="#bfe3f2"/><path d="M12 40h76" fill="none" stroke="#6bb4dc"/><path d="M22 60Q34 48 46 60Q34 72 22 60zM46 60l8-6v12z" fill="#f2a25c"/><circle cx="30" cy="58" r="2" fill="#3a2e4f"/><path d="M66 70q6-10 0-18M74 72q6-10 0-18" fill="none" stroke="#8cc67a" stroke-width="3"/><path d="M12 88h76" fill="none" stroke="#9c6a43"/>`,
+gear:`<circle cx="50" cy="50" r="22" fill="#d8d2e6"/><circle cx="50" cy="50" r="9" fill="#fff"/><path d="M50 14v12M50 74v12M14 50h12M74 50h12M24 24l8 8M68 68l8 8M76 24l-8 8M32 68l-8 8" stroke-width="7"/>`,
+mochi:`<ellipse cx="50" cy="62" rx="34" ry="18" fill="#fdfaf2"/><path d="M20 58Q30 30 50 30Q72 30 80 58Q64 50 50 54Q34 50 20 58z" fill="#fff"/><path d="M34 40Q40 36 48 38" fill="none" stroke="#e0d8c8" stroke-width="2.5"/><path d="M44 82h12" stroke="#e0d8c8"/>`,
+nira:`<path d="M34 90V70M46 90V66M58 90V66M70 90V70" stroke="#f1ece0" stroke-width="8"/><path d="M30 70Q24 40 18 16M44 66Q42 40 40 10M60 66Q62 40 66 10M74 70Q80 44 88 20" fill="none" stroke="#5aa65b" stroke-width="7"/><path d="M26 70h52" stroke="#d9b27a" stroke-width="4"/>`,
 };
-const ICONMAP={'涸沼':'lake','しじみ':'shijimi','広浦':'hirou','はにわ':'haniwa','夕日':'sunset','野鳥':'bird','スズガモ':'duck','オオワシ':'eagle','うなぎ':'eel','ハゼ':'goby','茨城町':'town','紅まさり':'imo','キャンプ':'tent','涸沼自然公園':'park','親沢公園':'hill','広浦公園':'boat','網掛公園':'telescope','大戸のサクラ':'sakura','ヤマトシジミ':'shijimi2','汽水湖':'brackish','涸沼川':'river','しじみ漁':'shijimiryo','ひぬまあじさいまつり':'hydrangea','はにわ窯':'kiln','太陽の広場':'sun','水戸八景':'scroll','涸沼水鳥・湿地センター':'wetland','小幡北山埴輪製作遺跡':'ruins','ヒヌマイトトンボ':'damselfly','ラムサール条約':'ramsar','広浦の秋月':'moon','天然記念物':'bigtree','茨城町東インター':'interchange','茨城県東茨城郡茨城町':'townmap','茨城町役場':'townhall','茨城町立図書館':'books','ゆうゆう館':'yuuyuu','運動公園':'baseball','ポケットファームどきどき':'carrot','水戸ホーリーホック':'soccer','ひぬまの里物産センター':'shop','里山自然体験':'forest','いばSUNホール':'hall','イオンタウン水戸南':'bags','マクドナルド':'burger','ダイソー':'basket','西松屋':'bottle','来々軒':'ramen','木村家住宅':'farmhouse','駒場庁舎':'office','前田団地':'danchi','運転免許センター':'license','いばらきまつり':'fireworks','警察学校':'police','イバライガー':'hero','飯沼栗':'kuri','ミルキークイーン':'milky','白鳥':'swan','黒鳥':'blackswan','飯沼こども園':'kodomoen','さくらこども園':'kodomoen','いばらき中央認定こども園':'kodomoen','いばらき幼稚園':'kinder','まさみ幼稚園':'kinder','長岡幼稚園':'kinder','大戸幼稚園':'kinder','ふじ保育園':'nursery','ひぬま保育園':'nursery','ウィステリアナーサリースクール':'nursery','茨城東高等学校':'highschool','合唱':'gassho','運動会':'undokai','登校':'tokou','下校':'geko','まち探検':'tanken','遠足':'ensoku','水泳':'swim','体育':'taiiku','国語':'kokugo','算数':'sansu','なわとび':'nawatobi','音楽':'ongaku','理科':'rika','社会':'shakai','生活':'seikatsu','茨城県':'kenmap','東茨城郡':'gunmap','ランドセル':'randoseru','宿泊学習':'shukuhaku','修学旅行':'shugaku','夏休み':'natsu','冬休み':'fuyu','春休み':'haru','ゴールデンウィーク':'gw','インフルエンザ':'flu','保健室':'hoken','卒業式':'sotsugyo','入学式':'nyugaku','委員会':'iinkai','クラブ活動':'club','体育館':'taiikukan','プール':'pool','教科書':'kyokasho','連絡帳':'renrakucho','国道6号':'kokudo6','オテントサマ':'cafe1','メロン':'melon','農業大学校':'sprout','消防学校':'shobo','長岡射撃場':'shageki','常磐道':'highway','納屋cafe':'naya','熊野神社':'shrine','うおふね':'uofune','うなぎや':'unagidon','大杉神社':'cedar','茨城町水道課':'suido','涸沼サイクリングロード':'cycling','北関東道':'road','セブンイレブン':'conbini','ローソン':'conbini','ファミリーマート':'conbini','セイコーマート':'conbini','長岡公園':'park','おはようございます':'sunrise','こんにちは':'hello','さようなら':'bye','ごめんね':'sorry','ごめんなさい':'sorry','ありがとう':'thanks','ありがとうございます':'thanks','お願いします':'please','いいよ':'ok','嫌です':'ng','やめて':'stop','また今度ね':'calendar','また明日':'sunrise','一緒にやらない？':'together','私はやらない':'ng','僕はいらない':'ng','私もやりたい':'raise','ブランコ':'swing','すべり台':'slide','うんてい':'monkey','一輪車':'unicycle','給食':'lunch','昼休み':'hirun','プリント':'print','タイピング':'keyboard','涸沼前川':'river'};
+const ICONMAP={'マガモ':'duck','コガモ':'duck','カルガモ':'duck','ヒドリガモ':'duck','オカヨシガモ':'duck','ハシビロガモ':'duck','オナガガモ':'duck','ホシハジロ':'duck','キンクロハジロ':'duck','ホオジロガモ':'duck','ミコアイサ':'duck','カワアイサ':'duck','トモエガモ':'duck','カイツブリ':'grebe','カンムリカイツブリ':'grebecrest','ハジロカイツブリ':'grebe','アカエリカイツブリ':'grebe','カワウ':'cormorant','コハクチョウ':'swan','ミサゴ':'eagle','チュウヒ':'eagle','オオタカ':'eagle','カワセミ':'kingfisher','ヨシゴイ':'bittern','オオヨシキリ':'reedbird','オオセッカ':'reedbird','アマサギ':'egret','チュウサギ':'egret','ユリカモメ':'gull','タゲリ':'lapwing','ツバメ':'swallow','ヨシ':'wetland','マコモ':'makomo','ガマ':'gama','ヒメガマ':'gama','タコノアシ':'tako','オオクグ':'kugu','ミズアオイ':'mizuaoi','あじさいの谷':'hydrangea','カシワバアジサイ':'hydrangea','ホタルブクロ':'hotaru','ワカサギ':'goby','メダカ':'medaka','ドジョウ':'dojo','モクズガニ':'crab','ヌマエビ':'shrimp','クロダイ':'kurodai','たかっぽ漁':'takappo','笹浸し漁':'sasa','涸沼竿':'sao','海跡湖':'brackish','鳥獣保護区':'protect','渡り鳥':'bird','冬鳥':'bird','夏鳥':'bird','ミニ水族館':'aquarium','見晴らしデッキ':'telescope','ライブラリー':'books','レクチャールーム':'hall','若宮川':'river','涸沼自然公園キャンプ場':'tent','国指定涸沼鳥獣保護区':'protect','大涸沼漁業協同組合':'shijimiryo','しじみかき':'shijimiryo','総合福祉センターゆうゆう館':'yuuyuu','網掛コミュニティセンター':'kominkan','茨城県工業技術センター':'gear','学校給食共同調理場':'lunch','ブックスタート事業':'books','ひぬまの恵み愛ちゃんメロン':'melon','イバラキング':'melon','レノン':'melon','アンデスメロン':'melon','オトメ':'melon','春メロン':'melon','たがね餅':'mochi','ニラ':'nira','スズキ':'goby','カベット山':'haniwa','いととんぼ':'shop','長岡村':'townmap','上野合村':'townmap','川根村':'townmap','沼前村':'townmap','涸沼':'lake','しじみ':'shijimi','広浦':'hirou','はにわ':'haniwa','夕日':'sunset','野鳥':'bird','スズガモ':'duck','オオワシ':'eagle','うなぎ':'eel','ハゼ':'goby','茨城町':'town','紅まさり':'imo','キャンプ':'tent','涸沼自然公園':'park','親沢公園':'hill','広浦公園':'boat','網掛公園':'telescope','大戸のサクラ':'sakura','ヤマトシジミ':'shijimi2','汽水湖':'brackish','涸沼川':'river','しじみ漁':'shijimiryo','ひぬまあじさいまつり':'hydrangea','はにわ窯':'kiln','太陽の広場':'sun','水戸八景':'scroll','涸沼水鳥・湿地センター':'wetland','小幡北山埴輪製作遺跡':'ruins','ヒヌマイトトンボ':'damselfly','ラムサール条約':'ramsar','広浦の秋月':'moon','天然記念物':'bigtree','茨城町東インター':'interchange','茨城県東茨城郡茨城町':'townmap','茨城町役場':'townhall','茨城町立図書館':'books','ゆうゆう館':'yuuyuu','運動公園':'baseball','ポケットファームどきどき':'carrot','水戸ホーリーホック':'soccer','ひぬまの里物産センター':'shop','里山自然体験':'forest','いばSUNホール':'hall','イオンタウン水戸南':'bags','マクドナルド':'burger','ダイソー':'basket','西松屋':'bottle','来々軒':'ramen','木村家住宅':'farmhouse','駒場庁舎':'office','前田団地':'danchi','運転免許センター':'license','いばらきまつり':'fireworks','警察学校':'police','イバライガー':'hero','飯沼栗':'kuri','ミルキークイーン':'milky','白鳥':'swan','黒鳥':'blackswan','飯沼こども園':'kodomoen','さくらこども園':'kodomoen','いばらき中央認定こども園':'kodomoen','いばらき幼稚園':'kinder','まさみ幼稚園':'kinder','長岡幼稚園':'kinder','大戸幼稚園':'kinder','ふじ保育園':'nursery','ひぬま保育園':'nursery','ウィステリアナーサリースクール':'nursery','茨城東高等学校':'highschool','合唱':'gassho','運動会':'undokai','登校':'tokou','下校':'geko','まち探検':'tanken','遠足':'ensoku','水泳':'swim','体育':'taiiku','国語':'kokugo','算数':'sansu','なわとび':'nawatobi','音楽':'ongaku','理科':'rika','社会':'shakai','生活':'seikatsu','茨城県':'kenmap','東茨城郡':'gunmap','ランドセル':'randoseru','宿泊学習':'shukuhaku','修学旅行':'shugaku','夏休み':'natsu','冬休み':'fuyu','春休み':'haru','ゴールデンウィーク':'gw','インフルエンザ':'flu','保健室':'hoken','卒業式':'sotsugyo','入学式':'nyugaku','委員会':'iinkai','クラブ活動':'club','体育館':'taiikukan','プール':'pool','教科書':'kyokasho','連絡帳':'renrakucho','国道6号':'kokudo6','オテントサマ':'cafe1','メロン':'melon','農業大学校':'sprout','消防学校':'shobo','長岡射撃場':'shageki','常磐道':'highway','納屋cafe':'naya','熊野神社':'shrine','うおふね':'uofune','うなぎや':'unagidon','大杉神社':'cedar','茨城町水道課':'suido','涸沼サイクリングロード':'cycling','北関東道':'road','セブンイレブン':'conbini','ローソン':'conbini','ファミリーマート':'conbini','セイコーマート':'conbini','長岡公園':'park','おはようございます':'sunrise','こんにちは':'hello','さようなら':'bye','ごめんね':'sorry','ごめんなさい':'sorry','ありがとう':'thanks','ありがとうございます':'thanks','お願いします':'please','いいよ':'ok','嫌です':'ng','やめて':'stop','また今度ね':'calendar','また明日':'sunrise','一緒にやらない？':'together','私はやらない':'ng','僕はいらない':'ng','私もやりたい':'raise','ブランコ':'swing','すべり台':'slide','うんてい':'monkey','一輪車':'unicycle','給食':'lunch','昼休み':'hirun','プリント':'print','タイピング':'keyboard','涸沼前川':'river'};
 const CATICON={machi:'pin',kominkan:'kominkan',school:'school'};
 function iconSVG(w){const k=ICONMAP[w.k]||CATICON[w.cat]; if(!k||!ICONS[k]) return null;
   return '<svg class="ico" viewBox="0 0 100 100" aria-hidden="true"><g filter="url(#rough)" stroke="#3a2e4f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none">'+ICONS[k]+'</g></svg>'}
@@ -934,7 +1094,7 @@ let IS_TOUCH=window.matchMedia&&matchMedia('(pointer:coarse)').matches; // タ�
 if(IS_TOUCH) document.documentElement.classList.add('touch');
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
-  if(id==='title') renderTitle(); if(id==='coursesScr') renderCourses(); if(id==='gacha') renderGacha(); if(id==='zukan') renderZukan(); if(id==='cert') renderCert();
+  if(id==='practiceScr') renderPractice(); if(id==='title') renderTitle(); if(id==='coursesScr') renderCourses(); if(id==='gacha') renderGacha(); if(id==='zukan') renderZukan(); if(id==='cert') renderCert();
   window.scrollTo(0,0);
 }
 document.addEventListener('click',e=>{
@@ -969,8 +1129,15 @@ $('howBtn').onclick=()=>openModal(`<h2>❓ あそびかた</h2><ol class="howto"
   <li>「し」は <kbd>shi</kbd> でも <kbd>si</kbd> でも OK。じぶんの うちかたで いいよ。</li>
   <li>じかんは 60びょう。<b>はやさより せいかく</b>が だいじ！ ミスしないで うつと てんすうが おおきくなるよ。</li>
   <li>せいかくさが <b>80%・90%・95%</b>を こえると ボーナス。<b>ミス0</b>なら <b>パーフェクト</b>で ボーナスが いちばん おおきいよ！</li>
-  <li>てんすうで <b>しょうごう</b>が もらえる。しじみを ためて <b>ガチャ</b>を まわし、ふるさとカードを ぜんぶ あつめよう！</li>
+  <li>てんすうで <b>称号</b>が もらえる。しじみを ためて <b>ガチャ</b>を まわし、ふるさとカードを ぜんぶ あつめよう！</li>
+  <li><b>れんしゅう</b>は じかんなし。「コースを えらぶ」の がめんから あそべるよ。てんすうは つかないから、ゆっくり うってみよう。</li>
   </ol><div class="row" style="justify-content:center"><button class="btn" onclick="closeModal()">わかった！</button></div>`);
+$('oyaBtn').onclick=()=>openModal(`<div class="oyaTxt"><h2>👪 おうちの人・先生へ</h2>
+  <h3>このゲームについて</h3><p>茨城町の言葉（地名・学校・涸沼の自然・名所など）をローマ字で打ちながら、「ふるさとカード」を集めるタイピングゲームです。画面の中で終わらず、実際の町へ出かけたくなることをねらっています。</p>
+  <h3>遊び方の目安</h3><p>本編は60秒です。速さよりも正確さを大切にした得点になっています。まだ打つのがむずかしいこどもは、「コースを選択する」の中の「れんしゅう」から始めると、時間を気にせずに練習できます（10・20・30語から選べます）。練習では、得点・しじみ・カードは変わりません。</p>
+  <h3>記録について</h3><p>得点・しじみ・カードは、いま使っているパソコン（Chromebook）のブラウザの中だけに保存され、外部には送信されません。同じパソコンを何人かで使うと記録が混ざること、ブラウザのデータを消すと記録も消えることにご注意ください。</p>
+  <h3>掲載している名前について</h3><p>学校・園・施設などの名前は、公式の名称を使っています。評価や比較を目的にした表示はしていません。内容でお気づきのことがあれば、作者（へいなか）までお知らせください。</p>
+  <div class="row" style="justify-content:center;margin-top:14px"><button class="btn" onclick="closeModal()">とじる</button></div></div>`);
 $('certBtn').onclick=()=>show('cert');
 function openModal(h){SE.page();$('modalBody').innerHTML=h;$('modal').classList.add('on')}
 function closeModal(){$('modal').classList.remove('on')}
@@ -992,6 +1159,7 @@ const EASY_N=25;
 function easyPool(){return WORDS.filter(w=>w.lv===1||(w.lv===2&&w.r.length<=4))} // かんたん：みじかい ことば
 function buildDeck(lv){return lv===1?shuffle(easyPool()).slice(0,EASY_N):shuffle(WORDS.filter(w=>w.lv===lv))}
 function startGame(lv){
+  if($('game').classList.contains('practice')){$('game').classList.remove('practice');$('tleft').textContent=GAME_SEC;$('tbar').style.width='100%'}
   ac(); const hid=$('hid'); hid.value=''; if(IS_TOUCH) hid.focus(); else hid.blur();
   G={lv,score:0,combo:0,maxCombo:0,ok:0,ng:0,words:[],deck:buildDeck(lv),di:0,m:null,w:null,miss:false,t0:0,left:GAME_SEC};
   show('game'); state='count'; nextWord(); updHud();
@@ -1013,6 +1181,7 @@ const REPEAT_P={1:0.3,2:0.2,3:0.15}; // むずかしいは すこし ひかえ�
 const LOWER_P=0.1; // うえの コースでも 1わりくらいは したの コースの ことばが でる
 function lowerPool(lv){return lv===2?WORDS.filter(w=>w.lv===1):lv===3?WORDS.filter(w=>w.lv===1||w.lv===2):[]} // ときどき まえに でた ことばが もどってくる
 function nextWord(){
+  if(G.practice){const w=G.deck[G.di++]; G.w=w; G.prev=w; G.m=makeMatcher(w.r); G.miss=false; renderWord(); return} // れんしゅう：じゅんばんに でる
   const pickFrom=pool=>{const c=pool.filter(w=>w!==G.prev);return c.length?c[Math.random()*c.length|0]:null};
   let w=null;
   if(G.words.length>=3&&Math.random()<REPEAT_P[G.lv]) w=pickFrom(G.words.slice(-12)); // まえに でた ことば
@@ -1045,8 +1214,9 @@ function fitWord(){
 window.addEventListener('resize',()=>{if(G&&G.w&&$('game').classList.contains('on'))fitWord()});
 function updHud(){
   $('score').textContent=G.score;
-  $('combo').textContent=G.combo>=5?G.combo+' コンボ！'+(G.combo>=20?' ×'+Math.min(4,1+Math.floor(G.combo/20)):''):'';
-  $('combo').classList.toggle('big',G.combo>=20);
+  if(G.practice){$('tleft').textContent=Math.min(G.words.length+1,G.total)+' / '+G.total;return} // れんしゅう：すすみぐあいだけ
+  $('combo').textContent=G.combo>=5?G.combo+' コンボ！'+(G.combo>=25?' ×'+Math.min(3,1+Math.floor(G.combo/25)):''):'';
+  $('combo').classList.toggle('big',G.combo>=25);
 }
 function flash(t,c){const f=$('flash');f.textContent=t;f.style.color=c||'var(--ok)';f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
 function handleChar(ch){
@@ -1054,10 +1224,11 @@ function handleChar(ch){
   ch=ch.replace(/[\uff01-\uff5e]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0)).replace(/ー/,'-');
   if(!/^[a-zA-Z0-9?\-]$/.test(ch)) return;
   if(press(G.m,ch)){
-    G.score+=keyPoint(G.combo,G.lv); G.combo++; G.ok++; G.maxCombo=Math.max(G.maxCombo,G.combo); SE.key(G.combo); if([10,25,50,100,150,200].includes(G.combo)) setTimeout(()=>SE.combo(),60);
+    G.score+=keyPoint(G.combo,G.lv); G.combo++; G.ok++; G.maxCombo=Math.max(G.maxCombo,G.combo); SE.key(G.combo); if(!G.practice&&[10,25,50,100,150,200].includes(G.combo)) setTimeout(()=>SE.combo(),60);
     if(isDone(G.m)){
       const b=wordBonus(G.m,!G.miss,G.lv); G.score+=b; G.words.push(G.w);
-      if(!G.miss){flash('ノーミス！ +'+b,'var(--sun)');SE.perfect()} else {flash('+'+b);SE.word()}
+      if(G.practice){ if(!G.miss){flash('ノーミス！','var(--sun)');SE.perfect()} else SE.word(); if(G.words.length>=G.total){endPractice();return} }
+      else if(!G.miss){flash('ノーミス！ +'+b,'var(--sun)');SE.perfect()} else {flash('+'+b);SE.word()}
       nextWord();
     } else renderWord();
   }else{
@@ -1076,6 +1247,7 @@ function tick(now){
 }
 document.addEventListener('keydown',e=>{
   if($('modal').classList.contains('on')&&e.key==='Escape'){closeModal();return}
+  if($('practiceScr').classList.contains('on')&&state==='idle'&&e.key==='Escape'){show('coursesScr');return}
   if($('coursesScr').classList.contains('on')&&state==='idle'){
     if(e.key==='Escape'){show('title');return}
     if(/^[123]$/.test(e.key)){const c=COURSES[e.key-1]; if(unlocked(c)){ac();SE.select();startGame(c.lv)} else SE.locked(); return}
@@ -1101,7 +1273,7 @@ $('quitBtn').onclick=()=>endGame(true);
 
 function endGame(quit){
   state='idle'; cdTimers.forEach(clearTimeout); $('hid').blur(); $('count').classList.remove('on');
-  if(quit){show('title');return}
+  if(quit){show(G&&G.practice?'practiceScr':'title');return}
   SE.timeup(); setTimeout(()=>SE.end(),700);
   const base=G.score, ab=accBonus(base,G.ok,G.ng); G.score=base+ab.pt;
   const lv=G.lv, sc=G.score, prev=S.best[lv]||0, before=COURSES.map(unlocked);
@@ -1111,7 +1283,7 @@ function endGame(quit){
   $('rScore').textContent=sc;
   $('rBest').textContent=sc>prev&&sc>0?'🎉 ハイスコア こうしん！':'';
   $('rTitle').textContent=titleOf(sc)[1];
-  const nx=nextTitle(sc); $('rNext').textContent=nx?'あと '+(nx[0]-sc)+'てんで「'+nx[1]+'」':'さいこうの しょうごうだ！';
+  const nx=nextTitle(sc); $('rNext').textContent=nx?'あと '+(nx[0]-sc)+'てんで「'+nx[1]+'」':'さいこうの 称号だ！';
   $('rWords').textContent=G.words.length;
   $('rAcc').textContent=Math.floor(accOf(G.ok,G.ng))+'%';
   $('rCombo').textContent=G.maxCombo;
@@ -1130,11 +1302,37 @@ function endGame(quit){
 function bridgeMsg(words){
   const pool=words.length?words:WORDS.filter(w=>w.lv===G.lv);
   const w=pool[Math.random()*pool.length|0], nm=w.k;
-  const m={place:`次は本物の「${nm}」に行ってみよう！`,town:`「${nm}」ってどんな町かな？ 地図で探して、歩いてみよう！`,food:`今度「${nm}」を味わってみよう！`,
+  const m={place:(w.cat==='school'?`「${nm}」は、町のどのあたりにあるかな？地図で見つけてみよう！`:`次は本物の「${nm}」に行ってみよう！`),town:`「${nm}」ってどんな町かな？ 地図で探して、歩いてみよう！`,food:`今度「${nm}」を味わってみよう！`,
     say:`本物の友だちやおうちの人に「${w.k}」と伝えてみよう！`,creature:`本物の「${nm}」を探してみよう！`,thing:`おうちの人に「${nm}」の話をしてみよう！`}[w.go];
   return '<span class="bi">'+iconHTML(w)+'</span> '+m+'<br><span style="font-weight:400;font-size:14px">ゲームの次は、町で探検だ。</span>';
 }
 $('againBtn').onclick=()=>{SE.select();startGame(G.lv)};
+
+// ===== れんしゅう（じかんなし・きろくに えいきょうしない） =====
+const PR={lv:1,n:10};
+function renderPractice(){
+  $('pracCourse').innerHTML=COURSES.map(c=>`<button class="pbtn ${PR.lv===c.lv?'sel':''}" data-pl="${c.lv}">${c.name}</button>`).join('');
+  $('pracCount').innerHTML=[10,20,30].map(n=>`<button class="pbtn ${PR.n===n?'sel':''}" data-pn="${n}">${n}こ</button>`).join('');
+}
+$('pracCourse').addEventListener('click',e=>{const b=e.target.closest('[data-pl]'); if(!b) return; PR.lv=+b.dataset.pl; renderPractice()});
+$('pracCount').addEventListener('click',e=>{const b=e.target.closest('[data-pn]'); if(!b) return; PR.n=+b.dataset.pn; renderPractice()});
+$('pracStart').onclick=()=>{ac();SE.select();startPractice(PR.lv,PR.n)};
+$('prAgain').onclick=()=>{ac();SE.select();startPractice(PR.lv,PR.n)};
+function startPractice(lv,n){
+  ac(); const hid=$('hid'); hid.value=''; if(IS_TOUCH) hid.focus(); else hid.blur();
+  const pool=lv===1?easyPool():WORDS.filter(w=>w.lv===lv), deck=shuffle(pool).slice(0,n);
+  G={lv,practice:true,total:deck.length,score:0,combo:0,maxCombo:0,ok:0,ng:0,words:[],deck,di:0,m:null,w:null,miss:false,t0:0,left:GAME_SEC};
+  show('game'); $('game').classList.add('practice'); state='play'; nextWord(); updHud(); G.t0=performance.now();
+}
+function fmtSec(s){return s<60?s+'秒':Math.floor(s/60)+'分 '+(s%60)+'秒'}
+function endPractice(){
+  state='idle'; $('hid').blur(); SE.end();
+  const sec=Math.round((performance.now()-G.t0)/1000), acc=Math.floor(accOf(G.ok,G.ng));
+  $('prCourse').textContent=COURSES[G.lv-1].name+'コース・'+G.total+'こ';
+  $('prWords').textContent=G.words.length; $('prAcc').textContent=acc+'%'; $('prTime').textContent=fmtSec(sec);
+  $('prMsg').textContent=acc>=80?'すごい！ せいかくに うてたよ！':'ゆっくり せいかくに うってみよう！';
+  show('practiceRes');
+}
 
 // ===== ガチャ =====
 function rollCard(){
@@ -1150,7 +1348,7 @@ function cardHTML(w,badge){
 }
 function renderGacha(){ $('spinBtn').innerHTML='1かい（'+SJT+GACHA_COST+'）'; $('spin10Btn').innerHTML='10かい まとめて（'+SJT+GACHA_COST*10+'）'; $('gDesc').innerHTML='しじみ <b>'+GACHA_COST+'</b>こで 1かい。おなじ カードが でたら しじみが <b>'+DUP_BACK+'</b>こ もどってくるよ。';$('coinG').textContent=S.coins; $('spinBtn').disabled=S.coins<GACHA_COST; $('spin10Btn').disabled=S.coins<GACHA_COST*10; $('gres').innerHTML=S.coins<GACHA_COST?'<p class="center" style="color:var(--ink2)">しじみが たりないよ。タイピングで ためよう！</p>':''; $('capsule').className='capsule'}
 function pull(){const w=rollCard();const isNew=!S.cards[w.id];S.coins-=GACHA_COST;S.cards[w.id]=(S.cards[w.id]||0)+1;if(!isNew)S.coins+=DUP_BACK;return {w,isNew}}
-function certMsg(){return (ownedCount()===CARDS.length||machiDone())?'<div class="unlock">🎉 '+(ownedCount()===CARDS.length?'ふるさとカードを ぜんぶ あつめた！':'町の なまえを ぜんぶ あつめた！')+' しょうしょを うけとろう <button class="btn" data-go="cert" style="margin-top:8px">📜 しょうしょ</button></div>':''}
+function certMsg(){return (ownedCount()===CARDS.length||machiDone())?'<div class="unlock">🎉 '+(ownedCount()===CARDS.length?'ふるさとカードを ぜんぶ あつめた！':'町の なまえを ぜんぶ あつめた！')+' 証書を うけとろう <button class="btn" data-go="cert" style="margin-top:8px">📜 証書</button></div>':''}
 let gBusy=false, lastBatch=[], skipRev=false;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function burst(w,isNew){ // ★3 の とくべつ えんしゅつ
@@ -1238,12 +1436,12 @@ function renderCert(){ if(certReady()) setTimeout(()=>SE.cert(),250);
   const best=Math.max(S.best[1]||0,S.best[2]||0,S.best[3]||0);
   const body=all?`あなたは ふるさとカード ${CARDS.length}まいを<br>すべて あつめました。<br>よって「<b>茨城町 ふるさとはかせ</b>」<br>であることを ここに しょうめいします。`
     :`あなたは 茨城町の 町の なまえ ${machiAll().length}こを<br>すべて あつめました。<br>よって「<b>茨城町 町名はかせ</b>」<br>であることを ここに しょうめいします。`;
-  $('certBody').innerHTML=done?`<h3>しょうしょ</h3><div class="nm">${esc(S.name||'')}&nbsp;</div>
+  $('certBody').innerHTML=done?`<h3>証書</h3><div class="nm">${esc(S.name||'')}&nbsp;</div>
     <p>${body}</p>
-    <p style="margin-top:10px">さいこう スコア ${best}てん ／ しょうごう「${titleOf(best)[1]}」</p>
-    <p style="margin-top:12px;font-weight:700">つぎは、ほんものの 町へ でかけよう！</p>
+    <p style="margin-top:10px">さいこう スコア ${best}てん ／ 称号「${titleOf(best)[1]}」</p>
+    <p style="margin-top:12px;font-weight:700">次は、本物の 町へ でかけよう！</p>
     <div class="dt">${ds}　茨城町 タイピング探検</div>`
-    :`<h3 style="letter-spacing:.1em">まだだよ</h3><p>「町の なまえ」の カードを ぜんぶ あつめるか、<br>ふるさとカードを ぜんぶ あつめると<br>しょうしょが もらえるよ。（いま ${ownedCount()} / ${CARDS.length}）</p>`;
+    :`<h3 style="letter-spacing:.1em">まだだよ</h3><p>「町の なまえ」の カードを ぜんぶ あつめるか、<br>ふるさとカードを ぜんぶ あつめると<br>証書が もらえるよ。（いま ${ownedCount()} / ${CARDS.length}）</p>`;
   $('printBtn').style.display=done?'':'none'; $('nameIn').style.display=done?'':'none';
 }
 $('nameIn').addEventListener('input',e=>{S.name=e.target.value;save();const nm=document.querySelector('.cert .nm');if(nm)nm.innerHTML=esc(S.name)+'&nbsp;'});
